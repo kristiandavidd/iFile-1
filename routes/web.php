@@ -25,6 +25,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/images/{filename}', function ($filename) {
+    return response()->file(public_path("images/{$filename}"));
+})->where('filename', '.*');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

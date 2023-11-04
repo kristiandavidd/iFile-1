@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
@@ -26,24 +26,55 @@ export default function Login({ status, canResetPassword }) {
         post(route('login'));
     };
 
+    const [captchaNum, setCaptchaNum] = useState(0);
+    const generateRandomNumber = () => {
+        const randomNum = Math.floor(Math.random() * 20);
+        const newCaptchaNum = captchaNum + randomNum;
+        setCaptchaNum(newCaptchaNum);
+    };
+
+    useEffect(() => {
+        generateRandomNumber();
+    }, []);
+
+    const [captchaCheck, setCaptchaCheck] = useState('');
+    const [loginError, setLoginError] = useState('');
+
+    const handleCaptchaCheck = (e) => {
+        setCaptchaCheck(e.target.value);
+    };
+
+    const checkCaptcha = (e) => {
+        e.preventDefault();
+        if (parseInt(captchaCheck, 10) === captchaNum) {
+            setLoginError('');
+            post(route('login'));
+        } else {
+            setLoginError('Captcha salah.');
+        }
+    };
+
+
+
     return (
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel className='text-i-pink' htmlFor="email" value="Email" />
 
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="username"
                         isFocused={true}
+                        placeholder='abc@gmail.com'
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
@@ -51,20 +82,45 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel className='text-i-pink' htmlFor="password" value="Password" />
 
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="current-password"
+                        placeholder="****"
                         onChange={(e) => setData('password', e.target.value)}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.password} className="mt-2 text-[#ff0000]" />
                 </div>
+                <div className="mt-4 ">
+                    <InputLabel className='text-i-pink' htmlFor="captcha" value="Captcha" />
+                    <div className='flex gap-4'>
+                        <TextInput
+                            id="captchaNum"
+                            type="number"
+                            disabled
+                            name="password"
+                            value={captchaNum}
+                            className="block w-1/2 mt-1 bg-i-light-pink"
+                            autoComplete=""
+                        />
+                        <TextInput
+                            id="captchaCheck"
+                            type="number"
+                            name="captchaCheck"
+                            value={captchaCheck}
+                            className="block w-1/2 mt-1"
+                            autoComplete=""
+                            onChange={handleCaptchaCheck}
+                        />
+                    </div>
+                </div>
+                <div className="mt-2 text-sm ">{loginError}</div>
 
                 <div className="block mt-4">
                     <label className="flex items-center">
@@ -77,19 +133,19 @@ export default function Login({ status, canResetPassword }) {
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex flex-col items-center justify-end mt-4">
+
+                    <PrimaryButton className="w-full mb-4" disabled={processing} onClick={checkCaptcha}>
+                        Log in
+                    </PrimaryButton>
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="text-sm text-gray-600 hover:text-gray-900 focus:outline-none"
                         >
                             Forgot your password?
                         </Link>
                     )}
-
-                    <PrimaryButton className="ml-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
                 </div>
             </form>
         </GuestLayout>
