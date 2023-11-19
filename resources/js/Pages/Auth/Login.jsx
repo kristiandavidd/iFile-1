@@ -27,10 +27,16 @@ export default function Login({ status, canResetPassword }) {
     };
 
     const [captchaNum, setCaptchaNum] = useState(0);
+    const [num1, setNum1] = useState(0);
+    const [num2, setNum2] = useState(0);
     const generateRandomNumber = () => {
-        const randomNum = Math.floor(Math.random() * 20);
-        const newCaptchaNum = captchaNum + randomNum;
-        setCaptchaNum(newCaptchaNum);
+        // const randomNum = Math.floor(Math.random() * 20);
+        // const newCaptchaNum = captchaNum + randomNum;
+        // setCaptchaNum(newCaptchaNum);
+        const randomNum1 = Math.floor(Math.random() * 20) + 1;
+        const randomNum2 = Math.floor(Math.random() * 20) + 1;
+        setNum1(randomNum1);
+        setNum2(randomNum2);
     };
 
     useEffect(() => {
@@ -46,11 +52,13 @@ export default function Login({ status, canResetPassword }) {
 
     const checkCaptcha = (e) => {
         e.preventDefault();
-        if (parseInt(captchaCheck, 10) === captchaNum) {
+        const userAnswer = parseInt(captchaCheck, 10)
+        if (userAnswer === num1 + num2) {
             setLoginError('');
             post(route('login'));
         } else {
             setLoginError('Captcha salah.');
+            generateRandomNumber();
         }
     };
 
@@ -99,22 +107,33 @@ export default function Login({ status, canResetPassword }) {
                 </div>
                 <div className="mt-4 ">
                     <InputLabel className='text-i-pink' htmlFor="captcha" value="Captcha" />
-                    <div className='flex gap-4'>
+                    <div className='flex items-center gap-4'>
                         <TextInput
                             id="captchaNum"
                             type="number"
                             disabled
-                            name="password"
-                            value={captchaNum}
-                            className="block w-1/2 mt-1 bg-i-light-pink"
+                            name="num1"
+                            value={num1}
+                            className="block w-1/3 mt-1 text-center bg-i-light-pink"
                             autoComplete=""
                         />
+                        <p>+</p>
+                        <TextInput
+                            id="captchaNum"
+                            type="number"
+                            disabled
+                            name="num2"
+                            value={num2}
+                            className="block w-1/3 mt-1 text-center bg-i-light-pink"
+                            autoComplete=""
+                        />
+                        <p>=</p>
                         <TextInput
                             id="captchaCheck"
                             type="number"
                             name="captchaCheck"
                             value={captchaCheck}
-                            className="block w-1/2 mt-1"
+                            className="block w-1/3 mt-1"
                             autoComplete=""
                             onChange={handleCaptchaCheck}
                         />
