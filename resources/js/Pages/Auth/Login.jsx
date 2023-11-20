@@ -72,7 +72,7 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel className='text-i-pink' htmlFor="email" value="Email" />
+                    <InputLabel className='text-i-pink-500' htmlFor="email" value="Email" />
 
                     <TextInput
                         id="email"
@@ -90,7 +90,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel className='text-i-pink' htmlFor="password" value="Password" />
+                    <InputLabel className='text-i-pink-500' htmlFor="password" value="Password" />
 
                     <TextInput
                         id="password"
@@ -106,7 +106,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputError message={errors.password} className="mt-2 text-[#ff0000]" />
                 </div>
                 <div className="mt-4 ">
-                    <InputLabel className='text-i-pink' htmlFor="captcha" value="Captcha" />
+                    <InputLabel className='text-i-pink-500' htmlFor="captcha" value="Captcha" />
                     <div className='flex items-center gap-4'>
                         <TextInput
                             id="captchaNum"
@@ -114,7 +114,7 @@ export default function Login({ status, canResetPassword }) {
                             disabled
                             name="num1"
                             value={num1}
-                            className="block w-1/3 mt-1 text-center bg-i-light-pink"
+                            className="block w-1/3 mt-1 text-center bg-i-pink-50"
                             autoComplete=""
                         />
                         <p>+</p>
@@ -124,7 +124,7 @@ export default function Login({ status, canResetPassword }) {
                             disabled
                             name="num2"
                             value={num2}
-                            className="block w-1/3 mt-1 text-center bg-i-light-pink"
+                            className="block w-1/3 mt-1 text-center bg-i-pink-50"
                             autoComplete=""
                         />
                         <p>=</p>

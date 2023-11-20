@@ -1,11 +1,12 @@
+import { Head } from "@inertiajs/react"
+import Navbar from "@/Components/navbar"
 
-export default function Sampah() {
+export default function Sampah({ auth }) {
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Sampah</h2>}
-        >
-            <div>Aowkoakokawkkwako</div>
-        </AuthenticatedLayout>
+        <>
+            <Head title="Sampah"></Head>
+            <Navbar auth={auth} />
+            <h1>AowkOAKOKWOKAOKWOPKOAWKOKWA</h1>
+        </>
     )
 }

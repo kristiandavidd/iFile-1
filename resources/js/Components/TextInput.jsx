@@ -14,11 +14,11 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
             {...props}
             type={type}
             className={
-                'border-i-pink focus:border-i-pink focus:ring-i-pink rounded-md shadow-sm' +
+                'border-i-pink-500 focus:border-i-pink-500 focus:ring-i-pink-500 rounded-md shadow-sm' +
                 className
             }
             ref={input}
-            // placeholder={placeholder}
+        // placeholder={placeholder}
         />
     );
 });

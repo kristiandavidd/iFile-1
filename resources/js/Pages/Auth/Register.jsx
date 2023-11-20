@@ -32,7 +32,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" className='text-i-pink' />
+                    <InputLabel htmlFor="name" value="Name" className='text-i-pink-500' />
 
                     <TextInput
                         id="name"
@@ -49,7 +49,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" className='text-i-pink' />
+                    <InputLabel htmlFor="email" value="Email" className='text-i-pink-500' />
 
                     <TextInput
                         id="email"
@@ -66,7 +66,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" className='text-i-pink' />
+                    <InputLabel htmlFor="password" value="Password" className='text-i-pink-500' />
 
                     <TextInput
                         id="password"
@@ -83,7 +83,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" className='text-i-pink' />
+                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" className='text-i-pink-500' />
 
                     <TextInput
                         id="password_confirmation"

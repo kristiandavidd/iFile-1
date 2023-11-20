@@ -23,11 +23,20 @@ Route::get('/', function () {
     ]);
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/sampah', function () {
+        return Inertia::render('Sampah');
+    });
+    Route::get('/file-saya', function() {
+        return Inertia::render('MyFile');
+    });
+});
+
 Route::get('/images/{filename}', function ($filename) {
     return response()->file(public_path("images/{$filename}"));
 })->where('filename', '.*');
 
-Route::get('/Home', function () {
+Route::get('/home', function () {
     return Inertia::render('Home');
 })->middleware(['auth', 'verified'])->name('home');
 

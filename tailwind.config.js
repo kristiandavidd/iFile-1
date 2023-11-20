@@ -13,8 +13,10 @@ export default {
 
     theme: {
         colors: {
-            'i-pink': '#E91E63',
-            'i-light-pink': '#FDE9EF',
+            'i-pink-500': '#E91E63',
+            'i-pink-100': '#F8B9CF',
+            'i-pink-300': '#F06896',
+            'i-pink-50': '#FDE9EF',
             'white': '#ffffff',
         },
         extend: {
