@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
-import { IconUserCircle, IconCalendarPlus, IconCopy } from '@tabler/icons-react';
+import { IconUserCircle, IconCalendarPlus } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 
-export default function LinkCard() {
+export default function LinkCard({ icons }) {
     const contentRef = useRef(null);
 
     const handleCopyClick = () => {
@@ -15,11 +15,12 @@ export default function LinkCard() {
     };
 
     return (
+
         <>
             <div className='w-full overflow-hidden shadow-md shadow-i-pink-500/20 rounded-xl'>
                 <div className=' flex justify-between px-4 text-[12px] text-i-pink-500 relative top-4'>
-                    <p className='flex items-center gap-1'><IconUserCircle size={16}></IconUserCircle> Sophie</p>
-                    <p className='flex items-center gap-1'><IconCalendarPlus size={16}></IconCalendarPlus> 8 Okt 2023</p>
+                    <p className='flex items-center gap-1'><IconUserCircle size={16} strokeWidth={1.2} ></IconUserCircle> Sophie</p>
+                    <p className='flex items-center gap-1'><IconCalendarPlus size={16} strokeWidth={1.2} ></IconCalendarPlus> 8 Okt 2023</p>
                 </div>
 
                 <div className='bg-i-pink-100 w-[70px] h-[70px] rounded-full m-auto z-10 relative top-[35px]'>
@@ -38,9 +39,11 @@ export default function LinkCard() {
                             onClick={handleCopyClick}>
                             https://seadesign.site/
                         </Link>
-                        <Link className="px-2 py-2 text-center text-white text-gray-600 rounded-md w-min hover:text-gray-90 bg-i-pink-300 focus:bg-i-pink-300/60" onClick={handleCopyClick}>
-                            <IconCopy />
-                        </Link>
+                        {icons.map((icon, index) => (
+                            <Link key={index} className={`px-2 py-2 text-center text-white rounded-md w-min hover:text-gray-900 bg-${icon.color}`} onClick={icon.action}>
+                                {icon.component}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::inertia('/', 'Home')->name('home');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/sampah', function () {
         return Inertia::render('Sampah');
@@ -36,15 +39,32 @@ Route::get('/images/{filename}', function ($filename) {
     return response()->file(public_path("images/{$filename}"));
 })->where('filename', '.*');
 
-Route::get('/home', function () {
-    return Inertia::render('Home');
-})->middleware(['auth', 'verified'])->name('home');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+Route::get('/login', fn() => inertia('Auth/Login'))->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('admin/dashboard', fn() => inertia('Admin/Dashboard'))->name('admin.dashboard');
+    Route::get('admin', function () {
+        return redirect()->route('admin.dashboard');
+    });
 });
 
-require __DIR__.'/auth.php';
+// Route::middleware(['auth'])->group(function () {
+    //     Route::get('/', fn() => inertia('Home'))->name('home');
+    //     // other user routes...
+    // });
+    
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
+    
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        
+    });
+    
+    
+    require __DIR__.'/auth.php';

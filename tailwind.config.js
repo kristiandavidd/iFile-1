@@ -17,6 +17,8 @@ export default {
             'i-pink-100': '#F8B9CF',
             'i-pink-300': '#F06896',
             'i-pink-50': '#FDE9EF',
+            'i-yellow-500': '#FF9800',
+            'i-orange-500': '#F44336',
             'white': '#ffffff',
         },
         extend: {
