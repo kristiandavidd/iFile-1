@@ -19,7 +19,8 @@ export default function Navbar({ auth }) {
                     </a>
                     <div className='flex'>
                         <ul className='flex items-center justify-center gap-4'>
-                            <li className={url === '/' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/'} >Eksplor</a></li>
+                            <li className={url === '/' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/'} >Beranda</a></li>
+                            <li className={url === '/eksplor' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/eksplor'} >Eksplor</a></li>
                             <li className={url === '/file-saya' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'file-saya'} >File Saya</a></li>
                             <li className={url === '/sampah' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'sampah'}>Sampah</a></li>
                             {

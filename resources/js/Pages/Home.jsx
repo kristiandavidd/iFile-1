@@ -1,39 +1,23 @@
 import {
     Head,
 } from '@inertiajs/react';
-import SearchLink from '@/Components/SearchLink';
 import Navbar from '@/Components/navbar'
-import LinkCard from '@/Components/LinkCard';
-import { IconCopy } from '@tabler/icons-react';
 
 
 export default function Home({ auth }) {
-    const icons = [
-        {
-            component: <IconCopy size={20} />,
-            action: () => {
-                // Handle edit action
-                console.log('Edit clicked');
-            },
-            color: 'i-pink-300',
-        },
-    ];
-
     return (
         <>
             <Head title="Home" />
             <Navbar auth={auth} />
-            <div>
-                <SearchLink />
+            <div className='w-3/5 m-auto'>
+                <p class="my-4 text-4xl font-semibold text-center">Selamat Datang di Sistem Informasi Manajemen File</p>
+                <p className='my-2 text-center'>Sistem Informasi Manajemen File akan membantu anda dalam memanajemen file-file keperluan administrasi di lingkungan Departemen Informatika Universitas Diponegoro.</p>
             </div>
-            <div className='grid grid-flow-row grid-cols-1 gap-4 px-10 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                <LinkCard icons={icons} />
-                <LinkCard icons={icons} />
-                <LinkCard icons={icons} />
-                <LinkCard icons={icons} />
+            <div className='flex w-3/5 gap-4 m-auto my-4 px-7'>
+                <div className='h-[300px] w-full bg-i-pink-100 rounded-md p-4'></div>
+                <div className='h-[300px] w-full bg-i-pink-100 rounded-md p-4'></div>
+                <div className='h-[300px] w-full bg-i-pink-100 rounded-md p-4'></div>
             </div>
-
-
         </>
     )
 }

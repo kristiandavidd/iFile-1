@@ -27,6 +27,12 @@ Route::get('/', function () {
 Route::inertia('/', 'Home')->name('home');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/eksplor', function () {
+        return Inertia::render('Explore');
+    });
+    Route::get('/', function () {
+        return Inertia::render('Home');
+    });
     Route::get('/sampah', function () {
         return Inertia::render('Sampah');
     });
