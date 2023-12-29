@@ -9,7 +9,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
+        username: '',
         password: '',
         remember: false,
     });
@@ -20,19 +20,10 @@ export default function Login({ status, canResetPassword }) {
         };
     }, []);
 
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('login'));
-    };
-
     const [captchaNum, setCaptchaNum] = useState(0);
     const [num1, setNum1] = useState(0);
     const [num2, setNum2] = useState(0);
     const generateRandomNumber = () => {
-        // const randomNum = Math.floor(Math.random() * 20);
-        // const newCaptchaNum = captchaNum + randomNum;
-        // setCaptchaNum(newCaptchaNum);
         const randomNum1 = Math.floor(Math.random() * 20) + 1;
         const randomNum2 = Math.floor(Math.random() * 20) + 1;
         setNum1(randomNum1);
@@ -50,12 +41,16 @@ export default function Login({ status, canResetPassword }) {
         setCaptchaCheck(e.target.value);
     };
 
-    const checkCaptcha = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
         const userAnswer = parseInt(captchaCheck, 10)
         if (userAnswer === num1 + num2) {
             setLoginError('');
-            post(route('login'));
+            try {
+                return await post(route('login'));
+            } catch (error) {
+                console.error('Post Request Error:', error);
+            }
         } else {
             setLoginError('Captcha salah.');
             generateRandomNumber();
@@ -72,21 +67,21 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel className='text-i-pink-500' htmlFor="email" value="Email" />
+                    <InputLabel className='text-i-pink-500' htmlFor="username" value="username" />
 
                     <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
+                        id="username"
+                        type="text"
+                        name="username"
+                        value={data.username}
                         className="block w-full mt-1"
                         autoComplete="username"
                         isFocused={true}
                         placeholder='abc@gmail.com'
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData('username', e.target.value)}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.username} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -154,7 +149,7 @@ export default function Login({ status, canResetPassword }) {
 
                 <div className="flex flex-col items-center justify-end mt-4">
 
-                    <PrimaryButton className="w-full mb-4" disabled={processing} onClick={checkCaptcha}>
+                    <PrimaryButton className="w-full mb-4" disabled={processing}>
                         Log in
                     </PrimaryButton>
                     {canResetPassword && (

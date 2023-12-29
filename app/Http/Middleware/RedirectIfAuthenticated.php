@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                Log::info("User '{$request->user()->email}' has role '{$request->user()->role}'.");
+                Log::info("User '{$request->user()->username}' has role '{$request->user()->role}'.");
                 return redirect()->route(match ($request->user()->role) {
                     'admin' => 'admin.dashboard',
                     default => 'home',

@@ -28,12 +28,13 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
 
+    public function store(LoginRequest $request): RedirectResponse
+{
+    $credentials = $request->only('username', 'password');
+
+    if (Auth::attempt($credentials)) {
         $user = Auth::user();
-        // dd($user->isAdmin());
 
         $request->session()->regenerate();
 
@@ -43,6 +44,11 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(RouteServiceProvider::HOME);
         }
     }
+
+    return back()->withErrors([
+        'username' => 'The provided credentials do not match our records.',
+    ]);
+}
 
     /**
      * Destroy an authenticated session.

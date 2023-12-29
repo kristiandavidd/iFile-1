@@ -12,10 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function isAdmin()
-    {
-        return $this->role === 'admin';
-    }
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'role',
@@ -48,4 +46,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
 }

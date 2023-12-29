@@ -13,16 +13,16 @@ class AuthController extends Controller
     
 
 // ...
-
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password'); // Change 'email' to 'username'
+        dd($credentials);
         Log::info('AuthController login terpanggil');
         if (Auth::attempt($credentials)) {
             $role = Auth::user()->role;
 
 
-            Log::info("User '{$credentials['email']}' with role '{$role}' logged in.");
+            Log::info("User '{$credentials['username']}' with role '{$role}' logged in.");
 
             return match ($role) {
                 'admin' => Inertia::location(route('admin.dashboard')),
@@ -30,7 +30,7 @@ class AuthController extends Controller
             };
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials']);
+        return back()->withErrors(['username' => 'Invalid credentials']);
     }
 
     protected function authenticated(Request $request, $user)
