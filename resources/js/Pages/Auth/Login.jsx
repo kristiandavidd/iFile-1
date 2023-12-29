@@ -67,7 +67,7 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel className='text-i-pink-500' htmlFor="username" value="username" />
+                    <InputLabel className='text-i-pink-500' htmlFor="username" value="Username" />
 
                     <TextInput
                         id="username"
@@ -81,7 +81,7 @@ export default function Login({ status, canResetPassword }) {
                         onChange={(e) => setData('username', e.target.value)}
                     />
 
-                    <InputError message={errors.username} className="mt-2" />
+                    <InputError message={errors.username} className="mt-2 text-[#ff0000]" />
                 </div>
 
                 <div className="mt-4">
@@ -134,7 +134,7 @@ export default function Login({ status, canResetPassword }) {
                         />
                     </div>
                 </div>
-                <div className="mt-2 text-sm ">{loginError}</div>
+                <div className="mt-2 text-sm text-[#ff0000]">{loginError}</div>
 
                 <div className="block mt-4">
                     <label className="flex items-center">
