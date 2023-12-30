@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\KategoriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 */
 
 
+// web.php
 
 
 Route::get('/', function () {
@@ -31,20 +33,13 @@ Route::get('/', function () {
 Route::inertia('/', 'Home')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/eksplor', function () {
-    //     return Inertia::render('Eksplor');
-    // })->name('eksplor');
     Route::get('/', function () {
         return Inertia::render('Home');
     })->name('home');
     Route::get('/eksplor', [FileController::class, 'index'])->name('eksplor.index');
-    // Route::get('/file-saya', function() {
-    //     return Inertia::render('MyFile');
-    // });
     Route::get('/file-saya', [FileController::class, 'indexMyFile'])->name('file-saya.index');
-    // Route::get('/sampah', function () {
-    //     return Inertia::render('Sampah');
-    // });
+    Route::post('/tambah-file', [FileController::class, 'store'])->name('tambah-file.store');
+    Route::get('/tambah-file', [KategoriController::class, 'index'])->name('tambah-file');
     Route::get('/sampah', [FileController::class, 'indexSampah'])->name('sampah.index');
 });
 

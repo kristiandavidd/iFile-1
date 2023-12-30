@@ -10,7 +10,6 @@ import React, { useRef } from 'react'
 
 
 export default function Eksplor({ auth, files }) {
-    console.log('Files:', files);
     const contentRef = useRef(null);
     const icons = [
         {

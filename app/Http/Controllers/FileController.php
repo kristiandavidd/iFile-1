@@ -10,6 +10,7 @@ use Inertia\Inertia;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Sampah;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class FileController extends Controller
 {
@@ -67,20 +68,36 @@ class FileController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama_file' => 'required|string|max:100',
-            'deskripsi' => 'required|string|max:300',
-            'url' => 'required|string|max:100',
-            'kategori' => 'required|exists:kategori,id',
-            'tgl_upload' => 'required|date',
-            'uploader' => 'required|exists:users,id',
-        ]);
+{
 
-        File::create($request->all());
+    $file = $request->file('file');
+    $namaFile = $request->input('namaFile');
+    $deskripsi = $request->input('deskripsi');
+    $idKategori = $request->input('kategori');
 
-        return redirect()->route('files.index')->with('success', 'File berhasil ditambahkan.');
-    }
+    $kategori = Kategori::find($idKategori);
+    $namaKategori = $kategori->kategori;
+
+    $cloudinaryUpload = Cloudinary::upload($file->getRealPath(), [
+        'folder' => 'iFile/'.$namaKategori, 
+        'public_id' => $namaFile,
+    ]);
+
+    $fileUrl = cloudinary()->getPath();
+
+    $newFile = new File([
+        'nama_file' => $namaFile,
+        'deskripsi' => $deskripsi,
+        'url' => $fileUrl,
+        'kategori' => $request->input('kategori'), 
+        'tgl_upload' => now(), 
+        'uploader' => auth()->user()->id,
+    ]);
+
+    $newFile->save();
+
+    return redirect()->route('file-saya.index')->with('success', 'File berhasil ditambahkan.');
+}
 
     public function show($id)
     {
