@@ -3,8 +3,9 @@ import { Head } from '@inertiajs/react'
 import Navbar from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard'
 import { IconPencil, IconTrash } from '@tabler/icons-react';
+import SearchLink from '@/Components/SearchLink';
 
-export default function MyFile({ auth }) {
+export default function MyFile({ auth, files }) {
     const icons = [
         {
             component: <IconPencil size={20} />,
@@ -27,11 +28,19 @@ export default function MyFile({ auth }) {
         <>
             <Head title='File Saya'></Head>
             <Navbar auth={auth} />
-            <div className='grid grid-flow-row grid-cols-1 gap-4 px-10 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                <LinkCard icons={icons} />
-                <LinkCard icons={icons} />
-                <LinkCard icons={icons} />
-                <LinkCard icons={icons} />
+            <div className='px-10'>
+
+                <div className='flex justify-between items-center'>
+                    <SearchLink />
+                    <button type='submit' className='px-4 py-2 h-fit text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
+                        +Tambah File
+                    </button>
+                </div>
+                <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
+                    {files && files.map((file) => (
+                        <LinkCard key={file.id} icons={icons} file={file} />
+                    ))}
+                </div>
             </div>
         </>
 

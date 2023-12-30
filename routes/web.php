@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -18,27 +19,33 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
+
+
+
 Route::get('/', function () {
     return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
-    ])->name('home');
-});
-
+        ])->name('home');
+    });
+    
 Route::inertia('/', 'Home')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/eksplor', function () {
-        return Inertia::render('Explore');
-    });
+    // Route::get('/eksplor', function () {
+    //     return Inertia::render('Eksplor');
+    // })->name('eksplor');
     Route::get('/', function () {
         return Inertia::render('Home');
     })->name('home');
-    Route::get('/sampah', function () {
-        return Inertia::render('Sampah');
-    });
-    Route::get('/file-saya', function() {
-        return Inertia::render('MyFile');
-    });
+    Route::get('/eksplor', [FileController::class, 'index'])->name('eksplor.index');
+    // Route::get('/file-saya', function() {
+    //     return Inertia::render('MyFile');
+    // });
+    Route::get('/file-saya', [FileController::class, 'indexMyFile'])->name('file-saya.index');
+    // Route::get('/sampah', function () {
+    //     return Inertia::render('Sampah');
+    // });
+    Route::get('/sampah', [FileController::class, 'indexSampah'])->name('sampah.index');
 });
 
 Route::get('/images/{filename}', function ($filename) {
@@ -51,11 +58,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return redirect()->route('admin.dashboard');
     });
 });
-
-// Route::middleware(['auth'])->group(function () {
-    //     Route::get('/', fn() => inertia('Home'))->name('home');
-    //     // other user routes...
-    // });
     
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -67,6 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
 });
+
 
 
 require __DIR__.'/auth.php';

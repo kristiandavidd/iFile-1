@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class File extends Model
+class Sampah extends Model
 {
     use HasFactory;
 
-    protected $table = 'file';
+    protected $table = 'sampah';
 
     protected $primaryKey = 'id';
 
@@ -19,8 +19,8 @@ class File extends Model
         'deskripsi',
         'url',
         'kategori',
-        'tgl_upload',
-        'uploader',
+        'tgl_buang',
+        'waster',
     ];
 
     public $timestamps = false; 
@@ -30,8 +30,8 @@ class File extends Model
         return $this->belongsTo(Kategori::class, 'kategori');
     }
 
-    public function uploader()
+    public function waster()
     {
-        return $this->belongsTo(User::class, 'uploader');
+        return $this->belongsTo(User::class, 'waster');
     }
 }
