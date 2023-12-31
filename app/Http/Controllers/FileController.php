@@ -70,20 +70,27 @@ class FileController extends Controller
     public function store(Request $request)
 {
 
-    $file = $request->file('file');
     $namaFile = $request->input('namaFile');
     $deskripsi = $request->input('deskripsi');
     $idKategori = $request->input('kategori');
-
+    
+    $fileUrl = null;
     $kategori = Kategori::find($idKategori);
     $namaKategori = $kategori->kategori;
 
-    $cloudinaryUpload = Cloudinary::upload($file->getRealPath(), [
-        'folder' => 'iFile/'.$namaKategori, 
-        'public_id' => $namaFile,
-    ]);
+    if ($request->input('jenisFile') === 'upload') {
 
-    $fileUrl = cloudinary()->getPath();
+        $file = $request->file('file');
+
+        $cloudinaryUpload = Cloudinary::upload($file->getRealPath(), [
+            'folder' => 'iFile/'.$namaKategori, 
+            'public_id' => $namaFile,
+        ]);
+
+        $fileUrl = cloudinary()->getPath();
+    } elseif ($request->input('jenisFile') === 'link') {
+        $fileUrl = $request->input('link');
+    }
 
     $newFile = new File([
         'nama_file' => $namaFile,

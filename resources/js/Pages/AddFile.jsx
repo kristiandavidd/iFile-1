@@ -8,6 +8,7 @@ import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
 import Dropdown from '@/Components/Dropdown';
+import { IconUpload } from '@tabler/icons-react';
 
 export default function Addfile({ auth, kategori }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,12 +16,14 @@ export default function Addfile({ auth, kategori }) {
         deskripsi: '',
         kategori: '',
         file: null,
+        jenisFile: '',
+        link: '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!data.namaFile || !data.deskripsi || !data.kategori || !data.file) {
+        if ((!data.namaFile || !data.deskripsi || !data.kategori) && (!data.file || !data.link)) {
             alert('Semua kolom harus diisi');
             return;
         }
@@ -41,7 +44,7 @@ export default function Addfile({ auth, kategori }) {
         <div className="px-10">
             <div className="m-auto w-1/2 p-4 rounded-md shadow-i-pink-500/20 shadow-md">
                 <p className='font-bold text-center text-i-pink-500 text-lg'>Tambah File</p>
-                <form action="" method='post'>
+                <form action="" method='post' className='flex flex-col justify-center'>
                     <div>
                         <InputLabel className='text-i-pink-500' htmlFor="namaFile" value="Nama File" />
 
@@ -92,19 +95,64 @@ export default function Addfile({ auth, kategori }) {
                             ))}
                         </select>
                     </div>
+
+
                     <div className="mt-4">
-                        <InputLabel className='text-i-pink-500' htmlFor="file" value="Pilih File" />
-                        <input
-                            type="file"
-                            name="file"
-                            id="file"
-                            onChange={(e) => setData('file', e.target.files[0])}
-                            className='w-full mt-1 border-i-pink-500'
-                        />
-                        <InputError message={errors.file} className="mt-2 text-[#ff0000]" />
+                        <InputLabel className='text-i-pink-500' htmlFor="jenisFile" value="Jenis File" />
+                        <div className="mt-2">
+                            <label className="inline-flex items-center">
+                                <input
+                                    type="radio"
+                                    name="jenisFile"
+                                    value="upload"
+                                    checked={data.jenisFile === 'upload'}
+                                    onChange={() => setData('jenisFile', 'upload')}
+                                    className="form-radio text-i-pink-500"
+                                />
+                                <span className="ml-2">Upload File</span>
+                            </label>
+                            <label className="inline-flex items-center ml-6">
+                                <input
+                                    type="radio"
+                                    name="jenisFile"
+                                    value="link"
+                                    checked={data.jenisFile === 'link'}
+                                    onChange={() => setData('jenisFile', 'link')}
+                                    className="form-radio text-i-pink-500"
+                                />
+                                <span className="ml-2">Link</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="mt-4">
-                        <button type="submit" class="px-4 py-2 h-fit text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
+                    {data.jenisFile === 'link' && (
+                        <div className="mt-4">
+                            <InputLabel className='text-i-pink-500' htmlFor="link" value="Link" />
+                            <input
+                                type="text"
+                                name="link"
+                                id="link"
+                                placeholder='Masukkan link di sini'
+                                value={data.link}
+                                onChange={(e) => setData('link', e.target.value)}
+                                className='w-full mt-1 border-i-pink-500'
+                            />
+                        </div>
+                    )}
+                    {data.jenisFile === 'upload' && (
+                        <div className="mt-4">
+                            <InputLabel className='text-i-pink-500' htmlFor="file" value="Pilih File" />
+                            <input
+                                type="file"
+                                name="file"
+                                id="file"
+                                onChange={(e) => setData('file', e.target.files[0])}
+                                className='w-full mt-1 border-i-pink-500'
+                            />
+                            <InputError message={errors.file} className="mt-2 text-[#ff0000]" />
+                        </div>
+                    )}
+                    <div className="mt-4 self-center">
+                        <button type="submit" className="px-7 py-2 h-fit text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
                             onClick={handleSubmit}>
                             +Tambah File
                         </button>
