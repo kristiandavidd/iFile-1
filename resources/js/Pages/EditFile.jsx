@@ -9,9 +9,8 @@ import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
 import Dropdown from '@/Components/Dropdown';
 import { IconUpload } from '@tabler/icons-react';
-import KategoriDropdown from '@/Components/KategoriDropdown.';
 
-export default function Addfile({ auth, kategori }) {
+export default function EditFile({ auth, kategori }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         namaFile: '',
         deskripsi: '',
@@ -40,11 +39,11 @@ export default function Addfile({ auth, kategori }) {
     };
 
     return <>
-        <Head title="Tambah File"></Head>
+        <Head title="Edit File"></Head>
         <Navbar auth={auth} />
         <div className="px-10">
             <div className="m-auto w-1/2 p-4 rounded-md shadow-i-pink-500/20 shadow-md">
-                <p className='font-bold text-center text-i-pink-500 text-lg'>Tambah File</p>
+                <p className='font-bold text-center text-i-pink-500 text-lg'>Edit File</p>
                 <form action="" method='post' className='flex flex-col justify-center'>
                     <div>
                         <InputLabel className='text-i-pink-500' htmlFor="namaFile" value="Nama File" />
