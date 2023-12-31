@@ -50,6 +50,7 @@ class AddFileController extends Controller
         'deskripsi' => $deskripsi,
         'url' => $fileUrl,
         'kategori' => $request->input('kategori'), 
+        'jenis_file' => $request->input('jenisFile'),
         'tgl_upload' => now(), 
         'uploader' => auth()->user()->id,
     ]);

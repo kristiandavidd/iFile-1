@@ -8,34 +8,34 @@ import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
 import Dropdown from '@/Components/Dropdown';
-import { IconUpload } from '@tabler/icons-react';
+import { IconEdit, IconPencil, IconUpload } from '@tabler/icons-react';
 
-export default function EditFile({ auth, kategori }) {
+export default function EditFile({ auth, file, kategori }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        namaFile: '',
-        deskripsi: '',
-        kategori: '',
-        file: null,
-        jenisFile: '',
-        link: '',
+        nama_file: file.nama_file,
+        deskripsi: file.deskripsi,
+        kategori: file.kategori,
+        file: '',
+        jenisFile: file.jenis_file,
+        link: file.url,
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if ((!data.namaFile || !data.deskripsi || !data.kategori) && (!data.file || !data.link)) {
+        if ((!data.nama_file || !data.deskripsi || !data.kategori) && (!data.file || !data.link)) {
             alert('Semua kolom harus diisi');
             return;
         }
 
         const formData = new FormData();
-        formData.append('namaFile', data.namaFile);
+        formData.append('nama_file', data.nama_file);
         formData.append('deskripsi', data.deskripsi);
         formData.append('kategori', data.kategori);
         formData.append('file', data.file);
-        console.log(data.kategori);
+        formData.append('link', data.link)
 
-        post(route('tambah-file.store'), formData);
+        post(route('edit-file.update', { id: file.id }), formData);
     };
 
     return <>
@@ -46,21 +46,21 @@ export default function EditFile({ auth, kategori }) {
                 <p className='font-bold text-center text-i-pink-500 text-lg'>Edit File</p>
                 <form action="" method='post' className='flex flex-col justify-center'>
                     <div>
-                        <InputLabel className='text-i-pink-500' htmlFor="namaFile" value="Nama File" />
+                        <InputLabel className='text-i-pink-500' htmlFor="nama_file" value="Nama File" />
 
                         <TextInput
-                            id="namaFile"
+                            id="nama_file"
                             type="text"
-                            name="namaFile"
-                            value={data.namaFile}
+                            name="nama_file"
+                            value={data.nama_file}
                             className="block w-full mt-1"
-                            autoComplete="current-namaFile"
+                            autoComplete="current-nama_file"
                             isFocused={true}
                             placeholder='Nama File'
-                            onChange={(e) => setData('namaFile', e.target.value)}
+                            onChange={(e) => setData('nama_file', e.target.value)}
                         />
 
-                        <InputError message={errors.namaFile} className="mt-2 text-[#ff0000]" />
+                        <InputError message={errors.nama_file} className="mt-2 text-[#ff0000]" />
                     </div>
 
                     <div className="mt-4">
@@ -97,7 +97,7 @@ export default function EditFile({ auth, kategori }) {
                     </div>
 
 
-                    <div className="mt-4">
+                    {/* <div className="mt-4">
                         <InputLabel className='text-i-pink-500' htmlFor="jenisFile" value="Jenis File" />
                         <div className="mt-2">
                             <label className="inline-flex items-center">
@@ -123,10 +123,10 @@ export default function EditFile({ auth, kategori }) {
                                 <span className="ml-2">Link</span>
                             </label>
                         </div>
-                    </div>
+                    </div> */}
                     {data.jenisFile === 'link' && (
                         <div className="mt-4">
-                            <InputLabel className='text-i-pink-500' htmlFor="link" value="Link" />
+                            <InputLabel className='text-i-pink-500' htmlFor="link" value="link" />
                             <input
                                 type="text"
                                 name="link"
@@ -152,9 +152,10 @@ export default function EditFile({ auth, kategori }) {
                         </div>
                     )}
                     <div className="mt-4 self-center">
-                        <button type="submit" className="px-7 py-2 h-fit text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
+                        <button type="submit" className="px-7 py-2 h-fit text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500 flex"
                             onClick={handleSubmit}>
-                            +Tambah File
+                            <IconPencil size={20} />
+                            Edit File
                         </button>
                     </div>
                 </form>

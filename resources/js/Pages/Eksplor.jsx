@@ -14,6 +14,7 @@ export default function Eksplor({ auth, files }) {
     const icons = [
         {
             component: <IconCopy size={20} />,
+            route: '',
             action: () => {
                 console.log('Edit clicked');
             },

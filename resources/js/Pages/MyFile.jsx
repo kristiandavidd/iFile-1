@@ -1,5 +1,5 @@
 import React from 'react'
-import { Head } from '@inertiajs/react'
+import { Head, usePage } from '@inertiajs/react'
 import Navbar from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard'
 import { IconPencil, IconTrash } from '@tabler/icons-react';
@@ -10,25 +10,15 @@ export default function MyFile({ auth, files }) {
     const icons = [
         {
             component: <IconPencil size={20} />,
-            action: () => {
-                // Handle edit action
-                console.log('Edit clicked');
-            },
+            route: 'edit-file',
             color: 'i-yellow-500',
         },
         {
             component: <IconTrash size={20} />,
-            action: () => {
-                // Handle delete action
-                console.log('Delete clicked');
-            },
+            route: 'edit-file',
             color: 'i-orange-500',
         },
     ];
-
-    const handleTambahFileClick = () => {
-        return route('tambah-file');
-    };
 
     return (
         <>

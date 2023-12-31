@@ -19,6 +19,7 @@ class File extends Model
         'deskripsi',
         'url',
         'kategori',
+        'jenis_file',
         'tgl_upload',
         'uploader',
     ];
