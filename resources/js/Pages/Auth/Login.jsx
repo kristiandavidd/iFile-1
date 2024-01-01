@@ -77,7 +77,7 @@ export default function Login({ status, canResetPassword }) {
                         className="block w-full mt-1"
                         autoComplete="username"
                         isFocused={true}
-                        placeholder='abc@gmail.com'
+                        placeholder='Username'
                         onChange={(e) => setData('username', e.target.value)}
                     />
 

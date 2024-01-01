@@ -35,7 +35,7 @@ export function Navbar({ auth }) {
                                         </Link>
 
                                         <Link href={route('profile.edit')} className='flex items-center gap-2 px-4 py-2 rounded-md bg-i-pink-50 hover:text-i-pink-500'>
-                                            {auth.user.name}
+                                            {auth.user.username}
                                             <IconUserCircle size={20} strokeWidth={1.2} className='text-i-pink-500' />
                                         </Link>
                                     </>

@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
-import { NavbarAdmin } from '@/Components/Navbar';
+import { NavbarAdmin, Navbar } from '@/Components/Navbar';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     return (

@@ -53,6 +53,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::match(['get', 'post'],'/edit-kategori', [KategoriController::class, 'showFormEdit'])->name('edit-kategori');
     Route::get('/delete-kategori/{id}', [KategoriController::class, 'destroy'])->name('delete-kategori');
     Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
+    Route::post('/tambah-user', [UserController::class, 'store'])->name('tambah-user.store');
+    Route::get('/tambah-pengguna', [UserController::class, 'showFormAdd'])->name('tambah-user');
+    Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('edit-user.update');
+    Route::match(['get', 'post'],'/edit-user', [UserController::class, 'showFormEdit'])->name('edit-user');
+    Route::get('/delete-user/{id}', [UserController::class, 'destroy'])->name('delete-user');
 });
 
 Route::middleware(['auth','regular_user'])->group(function () {
