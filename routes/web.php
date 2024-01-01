@@ -12,7 +12,9 @@ use App\Http\Controllers\EditFileController;
 use App\Http\Controllers\EksplorController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MyFileController;
-use App\Http\Controllers\SampahController;
+use App\Http\Controllers\AdminSampahController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\MySampahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,16 @@ Route::get('/', function () {
     
 Route::inertia('/', 'Home')->name('home');
 
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Admin/Home');
+    })->name('admin');
+    Route::get('/file', [FileController::class, 'index'])->name('file.index');
+    Route::get('/sampah', [AdminSampahController::class, 'index'])->name('sampah.index');
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return Inertia::render('Home');
@@ -48,24 +60,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/edit-file/{id}', [EditFileController::class, 'update'])->name('edit-file.update');
     Route::match(['get', 'post'],'/edit-file', [EditFileController::class, 'index'])->name('edit-file');
     Route::get('/delete-file/{id}', [MyFileController::class, 'destroy'])->name('delete-file');
-    Route::get('/restore-file/{id}', [SampahController::class, 'restore'])->name('restore-file');
-    Route::get('/sampah', [SampahController::class, 'index'])->name('sampah.index');
+    Route::get('/restore-file/{id}', [MySampahController::class, 'restore'])->name('restore-file');
+    Route::get('/sampah', [MySampahController::class, 'index'])->name('sampah.index');
 });
 
 Route::get('/images/{filename}', function ($filename) {
     return response()->file(public_path("images/{$filename}"));
 })->where('filename', '.*');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('admin/dashboard', fn() => inertia('Admin/Dashboard'))->name('admin.dashboard');
-    Route::get('admin', function () {
-        return redirect()->route('admin.dashboard');
-    });
-});
+
     
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

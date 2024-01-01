@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 Log::info("User '{$request->user()->username}' has role '{$request->user()->role}'.");
                 return redirect()->route(match ($request->user()->role) {
-                    'admin' => 'admin.dashboard',
+                    'admin' => 'admin',
                     default => 'home',
                 });
             }

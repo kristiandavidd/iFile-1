@@ -2,14 +2,14 @@ import {
     Head,
 } from '@inertiajs/react';
 import SearchLink from '@/Components/SearchLink';
-import { Navbar } from '@/Components/navbar'
+import { NavbarAdmin } from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard';
 import { IconCopy, IconUserCircle, IconCalendarPlus } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 import React, { useRef } from 'react'
 
 
-export default function Eksplor({ auth, files }) {
+export default function User({ auth }) {
     const contentRef = useRef(null);
     const icons = [
         {
@@ -34,18 +34,13 @@ export default function Eksplor({ auth, files }) {
     return (
         <>
             <Head title="Eksplor" />
-            <Navbar auth={auth} />
+            <NavbarAdmin auth={auth} />
             <div className='px-10'>
-
+                <p>ini punya admin</p>
                 <div>
                     <SearchLink />
                 </div>
 
-                <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {files && files.map((file) => (
-                        <LinkCard key={file.id} icons={icons} file={file} />
-                    ))}
-                </div>
             </div>
 
         </>

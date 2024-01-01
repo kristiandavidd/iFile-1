@@ -1,14 +1,16 @@
 import {
     Head,
 } from '@inertiajs/react';
-import { Navbar } from '@/Components/navbar'
+import Search from '@/Components/SearchLink';
+import { NavbarAdmin } from '@/Components/navbar'
+import LinkCard from '@/Components/LinkCard';
 
 
 export default function Home({ auth }) {
     return (
         <>
-            <Head title="Home" />
-            <Navbar auth={auth} />
+            <Head title="Dashboard" />
+            <NavbarAdmin auth={auth} />
             <div className='w-3/5 m-auto'>
                 <p class="my-4 text-4xl font-semibold text-center">Selamat Datang di Sistem Informasi Manajemen File</p>
                 <p className='my-2 text-center'>Sistem Informasi Manajemen File akan membantu anda dalam memanajemen file-file keperluan administrasi di lingkungan Departemen Informatika Universitas Diponegoro.</p>
@@ -18,6 +20,8 @@ export default function Home({ auth }) {
                 <div className='h-[300px] w-full bg-i-pink-100 rounded-md p-4'></div>
                 <div className='h-[300px] w-full bg-i-pink-100 rounded-md p-4'></div>
             </div>
+
+
         </>
     )
 }

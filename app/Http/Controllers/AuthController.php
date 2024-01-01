@@ -25,7 +25,7 @@ class AuthController extends Controller
             Log::info("User '{$credentials['username']}' with role '{$role}' logged in.");
 
             return match ($role) {
-                'admin' => Inertia::location(route('admin.dashboard')),
+                'admin' => Inertia::location(route('admin')),
                 default => Inertia::location(route('home')),
             };
         }
@@ -36,7 +36,7 @@ class AuthController extends Controller
     protected function authenticated(Request $request, $user)
 {
     if ($user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin');
     }
 
     return redirect('/home');

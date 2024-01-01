@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\File;
 
-class SampahController extends Controller
+class AdminSampahController extends Controller
 {
     public function index()
     {
@@ -26,7 +26,7 @@ class SampahController extends Controller
             return $trash;
         });
 
-        return Inertia::render('Sampah', ['files' => $trashes]);
+        return Inertia::render('Admin/Sampah', ['files' => $trashes]);
     }
 
     public function restore($id)

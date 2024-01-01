@@ -3,7 +3,7 @@ import {
     useForm
 } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import Navbar from '@/Components/navbar'
+import { Navbar } from '@/Components/navbar'
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
@@ -43,8 +43,8 @@ export default function Addfile({ auth, kategori }) {
         <Head title="Tambah File"></Head>
         <Navbar auth={auth} />
         <div className="px-10">
-            <div className="m-auto w-1/2 p-4 rounded-md shadow-i-pink-500/20 shadow-md">
-                <p className='font-bold text-center text-i-pink-500 text-lg'>Tambah File</p>
+            <div className="w-1/2 p-4 m-auto rounded-md shadow-md shadow-i-pink-500/20">
+                <p className='text-lg font-bold text-center text-i-pink-500'>Tambah File</p>
                 <form action="" method='post' className='flex flex-col justify-center'>
                     <div>
                         <InputLabel className='text-i-pink-500' htmlFor="namaFile" value="Nama File" />
@@ -86,7 +86,7 @@ export default function Addfile({ auth, kategori }) {
                         <select
                             name="kategori"
                             id="kategori"
-                            className='w-full rounded-md block mt-1 border-i-pink-500'
+                            className='block w-full mt-1 rounded-md border-i-pink-500'
                             value={data.kategori}
                             onChange={(e) => setData('kategori', e.target.value)}
                         >
@@ -152,8 +152,8 @@ export default function Addfile({ auth, kategori }) {
                             <InputError message={errors.file} className="mt-2 text-[#ff0000]" />
                         </div>
                     )}
-                    <div className="mt-4 self-center">
-                        <button type="submit" className="px-7 py-2 h-fit text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
+                    <div className="self-center mt-4">
+                        <button type="submit" className="py-2 text-white text-gray-600 rounded-md px-7 h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
                             onClick={handleSubmit}>
                             +Tambah File
                         </button>

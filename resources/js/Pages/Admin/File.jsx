@@ -2,14 +2,14 @@ import {
     Head,
 } from '@inertiajs/react';
 import SearchLink from '@/Components/SearchLink';
-import { Navbar } from '@/Components/navbar'
+import { NavbarAdmin } from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard';
 import { IconCopy, IconUserCircle, IconCalendarPlus } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 import React, { useRef } from 'react'
 
 
-export default function Eksplor({ auth, files }) {
+export default function File({ auth, files }) {
     const contentRef = useRef(null);
     const icons = [
         {
@@ -34,9 +34,9 @@ export default function Eksplor({ auth, files }) {
     return (
         <>
             <Head title="Eksplor" />
-            <Navbar auth={auth} />
+            <NavbarAdmin auth={auth} />
             <div className='px-10'>
-
+                <p>ini punya admin</p>
                 <div>
                     <SearchLink />
                 </div>

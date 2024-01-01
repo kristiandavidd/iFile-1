@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Head, usePage } from '@inertiajs/react'
-import Navbar from '@/Components/navbar'
+import { Navbar } from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard'
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import SearchLink from '@/Components/SearchLink';
@@ -55,9 +55,9 @@ export default function MyFile({ auth, files }) {
             <Navbar auth={auth} />
             <div className='px-10'>
 
-                <div className='flex justify-between items-center'>
+                <div className='flex items-center justify-between'>
                     <SearchLink />
-                    <Link href={route('tambah-file')} className='px-4 py-2 h-fit text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
+                    <Link href={route('tambah-file')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
                         +Tambah File
                     </Link>
                 </div>
