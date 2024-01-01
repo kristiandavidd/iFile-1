@@ -48,7 +48,7 @@ class EditFileController extends Controller
 
             $fileUrl = cloudinary()->getPath();
         } elseif ($request->input('jenisFile') === 'link') {
-            $fileUrl = $request->input('url');
+            $fileUrl = $request->input('link');
         }
 
         $file->update([

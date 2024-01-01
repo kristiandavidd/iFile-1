@@ -6,7 +6,6 @@ import { Link } from '@inertiajs/react';
 export default function LinkCard({ icons, file, id }) {
     const contentRef = useRef(null);
 
-
     const handleCopyClick = () => {
         const range = document.createRange();
         range.selectNode(contentRef.current);
@@ -39,7 +38,7 @@ export default function LinkCard({ icons, file, id }) {
                     </div>
                     <div className='flex w-full gap-2' ref={contentRef}>
 
-                        <Link className="w-full px-4 py-2 text-center text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500 truncate"
+                        <Link className="w-full px-4 py-2 text-center text-white text-gray-600 truncate rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
                             onClick={handleCopyClick}>
                             {file.url}
                         </Link>

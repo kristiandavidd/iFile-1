@@ -95,35 +95,6 @@ export default function EditFile({ auth, file, kategori }) {
                             ))}
                         </select>
                     </div>
-
-
-                    {/* <div className="mt-4">
-                        <InputLabel className='text-i-pink-500' htmlFor="jenisFile" value="Jenis File" />
-                        <div className="mt-2">
-                            <label className="inline-flex items-center">
-                                <input
-                                    type="radio"
-                                    name="jenisFile"
-                                    value="upload"
-                                    checked={data.jenisFile === 'upload'}
-                                    onChange={() => setData('jenisFile', 'upload')}
-                                    className="form-radio text-i-pink-500"
-                                />
-                                <span className="ml-2">Upload File</span>
-                            </label>
-                            <label className="inline-flex items-center ml-6">
-                                <input
-                                    type="radio"
-                                    name="jenisFile"
-                                    value="link"
-                                    checked={data.jenisFile === 'link'}
-                                    onChange={() => setData('jenisFile', 'link')}
-                                    className="form-radio text-i-pink-500"
-                                />
-                                <span className="ml-2">Link</span>
-                            </label>
-                        </div>
-                    </div> */}
                     {data.jenisFile === 'link' && (
                         <div className="mt-4">
                             <InputLabel className='text-i-pink-500' htmlFor="link" value="link" />
