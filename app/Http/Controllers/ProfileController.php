@@ -34,7 +34,6 @@ class ProfileController extends Controller
 
         $user->update([
             'username' => $request->input('username'),
-            'name' => $request->input('name'),
         ]);
 
         return Redirect::route('profile.edit');

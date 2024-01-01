@@ -10,7 +10,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         username: user.username,
-        name: user.name,
     });
 
     const submit = (e) => {
@@ -35,29 +34,12 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                     <TextInput
                         id="username"
-                        disabled
-                        className="block w-full mt-1 bg-i-pink-50"
+                        className="block w-full mt-1 "
                         value={data.username}
                         onChange={(e) => setData('username', e.target.value)}
                         required
                         isFocused
                         autoComplete="username"
-                    />
-
-                    <InputError className="mt-2" message={errors.name} />
-                </div>
-
-                <div>
-                    <InputLabel htmlFor="name" value="Nama" />
-
-                    <TextInput
-                        id="name"
-                        className="block w-full mt-1"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
                     />
 
                     <InputError className="mt-2" message={errors.name} />
