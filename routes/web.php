@@ -47,6 +47,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/sampah', [AdminSampahController::class, 'index'])->name('sampah.index');
     Route::get('/sampah/{id}', [AdminSampahController::class, 'destroy'])->name('delete-permanen');
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::post('/tambah-kategori', [KategoriController::class, 'store'])->name('tambah-kategori.store');
+    Route::get('/tambah-kategori', [KategoriController::class, 'showFormAdd'])->name('tambah-kategori');
+    Route::post('/edit-kategori/{id}', [KategoriController::class, 'update'])->name('edit-kategori.update');
+    Route::match(['get', 'post'],'/edit-kategori', [KategoriController::class, 'showFormEdit'])->name('edit-kategori');
+    Route::get('/delete-kategori/{id}', [KategoriController::class, 'destroy'])->name('delete-kategori');
     Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
 });
 

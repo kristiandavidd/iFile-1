@@ -23,7 +23,7 @@ export default function User({ auth }) {
 
     return (
         <>
-            <Head title="Eksplor" />
+            <Head title="Pengguna" />
             <NavbarAdmin auth={auth} />
             <div className='px-10'>
                 <div>

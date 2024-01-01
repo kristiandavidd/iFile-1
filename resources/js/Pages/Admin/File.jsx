@@ -39,7 +39,7 @@ export default function File({ auth, files, kategori }) {
 
     return (
         <>
-            <Head title="Eksplor" />
+            <Head title="File Manajemen" />
             <NavbarAdmin auth={auth} />
             <div className='px-10'>
                 <div className='flex items-center justify-between'>
