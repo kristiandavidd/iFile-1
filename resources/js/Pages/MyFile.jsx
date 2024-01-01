@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Head, usePage } from '@inertiajs/react'
 import Navbar from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard'
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import SearchLink from '@/Components/SearchLink';
 import { Link } from '@inertiajs/react';
+import Swal from 'sweetalert2';
 
 export default function MyFile({ auth, files }) {
+    const [fileId, setFileId] = useState(null);
     const icons = [
         {
             component: <IconPencil size={20} />,
@@ -15,10 +17,37 @@ export default function MyFile({ auth, files }) {
         },
         {
             component: <IconTrash size={20} />,
-            route: 'edit-file',
+            route: 'delete-file',
+            // action: () => handleDeleteClick(),
             color: 'i-orange-500',
         },
     ];
+
+    const handleDeleteClick = () => {
+        fileId.preventDefault();
+        setDeleteFileId(fileId);
+        console.log('delete file id', fileId);
+
+        Swal.fire({
+            title: 'Konfirmasi Hapus',
+            text: 'Anda yakin ingin menghapus file ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#F8B9CF',
+            cancelButtonColor: '#E91E63',
+            // confirmButtonText: 'Ya, Hapus!',
+            confirmButtonText: '<span style="color: #E91E63;">Ya, Hapus!</span>',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'custom-confirm-button-class',
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('delete file id', fileId);
+                route('delete-file', { id: fileId });
+            }
+        });
+    };
 
     return (
         <>

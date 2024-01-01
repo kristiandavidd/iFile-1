@@ -8,9 +8,10 @@ export default function Sampah({ auth, files }) {
     const icons = [
         {
             component: <IconRotateClockwise size={20} />,
-            action: () => {
-                console.log('Edit clicked');
-            },
+            // action: () => {
+            //     console.log('Edit clicked');
+            // },
+            route: 'restore-file',
             color: 'i-yellow-500',
         },
     ];

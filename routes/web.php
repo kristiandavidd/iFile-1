@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tambah-file', [AddFileController::class, 'index'])->name('tambah-file');
     Route::post('/edit-file/{id}', [EditFileController::class, 'update'])->name('edit-file.update');
     Route::match(['get', 'post'],'/edit-file', [EditFileController::class, 'index'])->name('edit-file');
-    Route::get('/delete-file', [EditFileController::class, 'index'])->name('delete-file');
+    Route::get('/delete-file/{id}', [MyFileController::class, 'destroy'])->name('delete-file');
+    Route::get('/restore-file/{id}', [SampahController::class, 'restore'])->name('restore-file');
     Route::get('/sampah', [SampahController::class, 'index'])->name('sampah.index');
 });
 

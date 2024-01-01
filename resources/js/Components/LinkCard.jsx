@@ -3,7 +3,7 @@ import { IconUserCircle, IconCalendarPlus } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 
 
-export default function LinkCard({ icons, file }) {
+export default function LinkCard({ icons, file, id }) {
     const contentRef = useRef(null);
 
 
@@ -44,16 +44,16 @@ export default function LinkCard({ icons, file }) {
                             {file.url}
                         </Link>
                         {icons.map((icon, index) => (
-                            <Link key={index} className={`px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-${icon.color}`}
+                            <a key={index} className={`px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-${icon.color}`}
                                 href={icon.route ? route(icon.route, { id: file.id }) : ''}
                                 onClick={icon.action}
                             >
                                 {icon.component}
-                            </Link>
+                            </a>
                         ))}
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     )
 }

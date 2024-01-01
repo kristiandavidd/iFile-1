@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\File;
 
 class SampahController extends Controller
 {
@@ -26,5 +27,24 @@ class SampahController extends Controller
         });
 
         return Inertia::render('Sampah', ['files' => $trashes]);
+    }
+
+    public function restore($id)
+    {
+        $trash = Sampah::find($id);
+
+        File::create([
+            'nama_file' => $trash->nama_file,
+            'deskripsi' => $trash->deskripsi,
+            'url' => $trash->url,
+            'kategori' => $trash->kategori,
+            'jenis_file' => $trash->jenis_file,
+            'tgl_upload' => now(),
+            'uploader' => auth()->user()->id,
+        ]);
+
+        $trash->delete();
+
+        return redirect()->route('sampah.index');
     }
 }
