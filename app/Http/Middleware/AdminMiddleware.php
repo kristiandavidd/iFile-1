@@ -30,7 +30,7 @@ public function handle(Request $request, Closure $next)
         }
     }
 
-    abort(403, 'Unauthorized action.');
+    return redirect()->route('home')->with('error', 'Unauthorized access.');
 }
 
 
