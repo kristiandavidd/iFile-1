@@ -2,11 +2,11 @@ import React, { useRef } from 'react'
 import { Head, Link } from "@inertiajs/react"
 import { Navbar } from "@/Components/navbar"
 import LinkCard from "@/Components/LinkCard"
-import { IconRotateClockwise, IconUserCircle, IconCalendarPlus } from '@tabler/icons-react';
+import { IconRotateClockwise, IconUserCircle, IconCalendarPlus, IconTrash } from '@tabler/icons-react';
 import SearchLink from "@/Components/SearchLink";
 import Swal from 'sweetalert2';
 
-export default function Sampah({ auth, files }) {
+export default function Sampah({ auth, files, kategori }) {
     const contentRef = useRef(null);
 
     const handleRestoreClick = (id) => {
@@ -35,9 +35,20 @@ export default function Sampah({ auth, files }) {
             <Head title="Sampah"></Head>
             <Navbar auth={auth} />
             <div className="px-10">
-                <SearchLink />
-
-
+                <div className='flex items-center gap-4'>
+                    <SearchLink />
+                    <select
+                        name="kategori"
+                        id="kategori"
+                        className='block mt-1 rounded-md border-i-pink-500 h-fit'
+                        onChange={(e) => setData('kategori', e.target.value)}
+                    >
+                        <option value="">Pilih Kategori</option>
+                        {kategori && kategori.map((k) => (
+                            <option key={k.id} value={k.id}>{k.kategori}</option>
+                        ))}
+                    </select>
+                </div>
                 <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
                     {files && files.map((file) => (
                         <div className='w-full overflow-hidden shadow-md shadow-i-pink-500/20 rounded-xl'>
@@ -64,7 +75,7 @@ export default function Sampah({ auth, files }) {
                                     >
                                         {file.url}
                                     </a>
-                                    <a onClick={() => handleRestoreClick(file.id)} className={`px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-yellow-500`}>
+                                    <a onClick={() => handleRestoreClick(file.id)} className={`cursor-pointer px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-yellow-500`}>
                                         <IconRotateClockwise size={20} />
                                     </a>
                                 </div>

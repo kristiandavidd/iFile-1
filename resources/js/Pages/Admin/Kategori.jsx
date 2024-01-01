@@ -11,16 +11,6 @@ import React, { useRef } from 'react'
 
 export default function Kategori({ auth }) {
     const contentRef = useRef(null);
-    const icons = [
-        {
-            component: <IconCopy size={20} />,
-            route: '',
-            action: () => {
-                console.log('Edit clicked');
-            },
-            color: 'i-pink-300',
-        },
-    ];
 
     const handleCopyClick = () => {
         const range = document.createRange();
@@ -36,7 +26,6 @@ export default function Kategori({ auth }) {
             <Head title="Eksplor" />
             <NavbarAdmin auth={auth} />
             <div className='px-10'>
-                <p>ini punya admin</p>
                 <div>
                     <SearchLink />
                 </div>

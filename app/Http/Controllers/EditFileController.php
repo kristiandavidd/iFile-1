@@ -60,6 +60,11 @@ class EditFileController extends Controller
 
         ]);
 
-        return redirect()->route('file-saya.index')->with('success', 'File berhasil diperbarui.');
+        if ($request->user()->isAdmin()) {
+            return redirect()->route('file.index')->with('success', 'File berhasil diperbarui.');
+        } else {
+            return redirect()->route('file-saya.index')->with('success', 'File berhasil diperbarui.');
+        }
+        
     }
 }

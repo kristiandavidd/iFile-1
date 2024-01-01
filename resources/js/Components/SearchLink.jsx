@@ -11,7 +11,7 @@ export default function SearchLink() {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
         <>
-            <div className='w-fit py-5'>
+            <div className='py-5 w-fit'>
 
                 <form action="" className='flex gap-4'>
                     <TextInput
@@ -25,13 +25,6 @@ export default function SearchLink() {
                     <button type='submit' className='px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
                         Cari
                     </button>
-                    <select name="kategori" id="kategori" className='rounded-md border-i-pink-300 fill-i-pink-500 focus:ring-i-pink-500 focus:border-i-pink-500'>
-                        <option value="kategori">kategori</option>
-                        <option value="kategori">Pengajaran</option>
-                        <option value="kategori">Penelitian</option>
-                        <option value="kategori">Pengabdian Masyarakat</option>
-                    </select>
-
                 </form>
 
             </div>

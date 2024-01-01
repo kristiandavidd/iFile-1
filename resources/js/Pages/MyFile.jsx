@@ -6,7 +6,7 @@ import { IconPencil, IconTrash, IconUserCircle, IconCalendarPlus } from '@tabler
 import SearchLink from '@/Components/SearchLink';
 import Swal from 'sweetalert2';
 
-export default function MyFile({ auth, files }) {
+export default function MyFile({ auth, files, kategori }) {
     const contentRef = useRef(null);
 
     const handleDeleteClick = (id) => {
@@ -36,7 +36,21 @@ export default function MyFile({ auth, files }) {
             <div className='px-10'>
 
                 <div className='flex items-center justify-between'>
-                    <SearchLink />
+                    <div className='flex items-center gap-4'>
+                        <SearchLink />
+                        <select
+                            name="kategori"
+                            id="kategori"
+                            className='block mt-1 rounded-md border-i-pink-500 h-fit'
+                            onChange={(e) => setData('kategori', e.target.value)}
+                        >
+                            <option value="">Pilih Kategori</option>
+                            {kategori && kategori.map((k) => (
+                                <option key={k.id} value={k.id}>{k.kategori}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <Link href={route('tambah-file')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
                         +Tambah File
                     </Link>
@@ -74,8 +88,7 @@ export default function MyFile({ auth, files }) {
                                         <IconPencil size={20} />
                                     </a>
                                     <a
-                                        className={`px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-orange-500`}
-                                        // href={route('delete-file', { id: file.id })}
+                                        className={`cursor-pointer px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-orange-500`}
                                         onClick={() => handleDeleteClick(file.id)}
                                     >
                                         <IconTrash size={20} />

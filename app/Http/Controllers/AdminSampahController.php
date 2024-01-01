@@ -10,14 +10,14 @@ use Inertia\Inertia;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\File;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AdminSampahController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-
-        $trashes= Sampah::where('waster', $userId)->with(['kategori', 'waster'])->get();
+        $trashes= Sampah::with(['kategori', 'waster'])->get();
+        $kategori = Kategori::all();
         $userRole = 'waster';
 
         $trashes->transform(function ($trash) use ($userRole) {
@@ -26,25 +26,20 @@ class AdminSampahController extends Controller
             return $trash;
         });
 
-        return Inertia::render('Admin/Sampah', ['files' => $trashes]);
+        return Inertia::render('Admin/Sampah', ['files' => $trashes, 'kategori'=>$kategori]);
     }
 
-    public function restore($id)
+    public function destroy($id)
     {
-        $trash = Sampah::find($id);
+        $trash = Sampah::findOrFail($id);
+        $nama_file = $trash->nama_file;
 
-        File::create([
-            'nama_file' => $trash->nama_file,
-            'deskripsi' => $trash->deskripsi,
-            'url' => $trash->url,
-            'kategori' => $trash->kategori,
-            'jenis_file' => $trash->jenis_file,
-            'tgl_upload' => now(),
-            'uploader' => auth()->user()->id,
-        ]);
+        if($trash->jenis_file === 'upload') {
+            Cloudinary::destroy($nama_file);
+        }
 
         $trash->delete();
 
-        return redirect()->route('sampah.index');
+        return redirect()->route('sampah.index')->with('success', 'File successfully deleted.');
     }
 }

@@ -45,6 +45,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     })->name('admin');
     Route::get('/file', [FileController::class, 'index'])->name('file.index');
     Route::get('/sampah', [AdminSampahController::class, 'index'])->name('sampah.index');
+    Route::get('/sampah/{id}', [AdminSampahController::class, 'destroy'])->name('delete-permanen');
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
     Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
 });
@@ -55,13 +56,16 @@ Route::middleware(['auth','regular_user'])->group(function () {
     })->name('home');
     Route::get('/eksplor', [EksplorController::class, 'index'])->name('eksplor.index');
     Route::get('/file-saya', [MyFileController::class, 'index'])->name('file-saya.index');
+    Route::get('/sampah', [MySampahController::class, 'index'])->name('sampah-saya.index');
+});
+
+Route::middleware(['auth'])->group(function() {
     Route::post('/tambah-file', [AddFileController::class, 'store'])->name('tambah-file.store');
     Route::get('/tambah-file', [AddFileController::class, 'index'])->name('tambah-file');
     Route::post('/edit-file/{id}', [EditFileController::class, 'update'])->name('edit-file.update');
     Route::match(['get', 'post'],'/edit-file', [EditFileController::class, 'index'])->name('edit-file');
     Route::get('/delete-file/{id}', [MyFileController::class, 'destroy'])->name('delete-file');
     Route::get('/restore-file/{id}', [MySampahController::class, 'restore'])->name('restore-file');
-    Route::get('/sampah', [MySampahController::class, 'index'])->name('sampah.index');
 });
 
 Route::get('/images/{filename}', function ($filename) {

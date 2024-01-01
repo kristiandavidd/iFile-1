@@ -14,6 +14,7 @@ class EksplorController extends Controller
     public function index()
     {
         $files = File::with(['kategori', 'uploader'])->get();
+        $kategori = Kategori::all();
         $userRole = 'uploader';
 
         $files->transform(function ($file) use($userRole) {
@@ -22,6 +23,6 @@ class EksplorController extends Controller
             return $file;
         });
 
-        return Inertia::render('Eksplor', ['files' => $files]);
+        return Inertia::render('Eksplor', ['files' => $files, 'kategori'=>$kategori]);
     }
 }

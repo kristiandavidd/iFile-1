@@ -16,6 +16,7 @@ class MyFileController extends Controller
     public function index()
     {
         $userId = Auth::id();
+        $kategori = Kategori::all();
 
         $files = File::where('uploader', $userId)->with(['kategori', 'uploader'])->get();
         $userRole = 'uploader';
@@ -26,10 +27,10 @@ class MyFileController extends Controller
             return $file;
         });
 
-        return Inertia::render('MyFile', ['files' => $files]);
+        return Inertia::render('MyFile', ['files' => $files, 'kategori'=>$kategori]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
         $file = File::find($id);
 
@@ -45,6 +46,10 @@ class MyFileController extends Controller
 
         $file->delete();
 
-        return redirect()->route('file-saya.index');
+        if ($request->user()->isAdmin()) {
+            return redirect()->route('file.index')->with('success', 'File berhasil diperbarui.');
+        } else {
+            return redirect()->route('file-saya.index')->with('success', 'File berhasil diperbarui.');
+        }
     }
 }

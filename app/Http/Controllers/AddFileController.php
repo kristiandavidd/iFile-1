@@ -57,6 +57,10 @@ class AddFileController extends Controller
 
     $newFile->save();
 
-    return redirect()->route('file-saya.index')->with('success', 'File berhasil ditambahkan.');
+    if ($request->user()->isAdmin()) {
+        return redirect()->route('file.index')->with('success', 'File berhasil diperbarui.');
+    } else {
+        return redirect()->route('file-saya.index')->with('success', 'File berhasil diperbarui.');
+    }
 }
 }

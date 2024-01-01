@@ -16,6 +16,7 @@ class MySampahController extends Controller
     public function index()
     {
         $userId = Auth::id();
+        $kategori = Kategori::all();
 
         $trashes= Sampah::where('waster', $userId)->with(['kategori', 'waster'])->get();
         $userRole = 'waster';
@@ -26,10 +27,10 @@ class MySampahController extends Controller
             return $trash;
         });
 
-        return Inertia::render('Sampah', ['files' => $trashes]);
+        return Inertia::render('Sampah', ['files' => $trashes, 'kategori'=>$kategori]);
     }
 
-    public function restore($id)
+    public function restore(Request $request,$id)
     {
         $trash = Sampah::find($id);
 
@@ -45,6 +46,10 @@ class MySampahController extends Controller
 
         $trash->delete();
 
-        return redirect()->route('sampah.index');
+        if ($request->user()->isAdmin()) {
+            return redirect()->route('sampah.index')->with('success', 'File berhasil diperbarui.');
+        } else {
+            return redirect()->route('sampah-saya.index')->with('success', 'File berhasil diperbarui.');
+        }
     }
 }

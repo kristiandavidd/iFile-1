@@ -77,8 +77,8 @@ export function NavbarAdmin({ auth }) {
                         <ul className='flex items-center justify-center gap-4'>
                             <li className={url === '/admin' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/admin'} >Beranda</a></li>
                             <li className={url === '/admin/file' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/admin/file'} >File</a></li>
-                            <li className={url === '/admin/kategori' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/admin/kategori'}>Kategori</a></li>
                             <li className={url === '/admin/sampah' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/admin/sampah'}>Sampah</a></li>
+                            <li className={url === '/admin/kategori' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/admin/kategori'}>Kategori</a></li>
                             <li className={url === '/admin/pengguna' ? 'text-i-pink-500 bg-i-pink-50 py-2 px-4 rounded-md' : 'hover:text-i-pink-500 px-4 py-2'}><a href={'/admin/pengguna'}>Pengguna</a></li>
                             {
                                 auth.user ? (

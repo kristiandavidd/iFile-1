@@ -3,7 +3,7 @@ import {
     useForm
 } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import { Navbar } from '@/Components/navbar'
+import { Navbar, NavbarAdmin } from '@/Components/navbar'
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
@@ -41,7 +41,11 @@ export default function Addfile({ auth, kategori }) {
 
     return <>
         <Head title="Tambah File"></Head>
-        <Navbar auth={auth} />
+        {auth && auth.user && auth.user.role === 'admin' ? (
+            <NavbarAdmin auth={auth} />
+        ) : (
+            <Navbar auth={auth} />
+        )}
         <div className="px-10">
             <div className="w-1/2 p-4 m-auto rounded-md shadow-md shadow-i-pink-500/20">
                 <p className='text-lg font-bold text-center text-i-pink-500'>Tambah File</p>

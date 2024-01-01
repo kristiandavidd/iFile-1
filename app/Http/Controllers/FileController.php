@@ -6,14 +6,14 @@ use Inertia\Inertia;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\File;
+use App\Models\Kategori;
 
 class FileController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-
-        $files = File::where('uploader', $userId)->with(['kategori', 'uploader'])->get();
+        $files = File::with(['kategori', 'uploader'])->get();
+        $kategori = Kategori::all();
         $userRole = 'uploader';
 
         $files->transform(function ($file) use ($userRole) {
@@ -22,6 +22,6 @@ class FileController extends Controller
             return $file;
         });
 
-        return Inertia::render('Admin/File', ['files' => $files]);
+        return Inertia::render('Admin/File', ['files' => $files, 'kategori' => $kategori]);
     }
 }

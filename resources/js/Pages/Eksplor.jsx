@@ -9,18 +9,8 @@ import { Link } from '@inertiajs/react';
 import React, { useRef } from 'react'
 
 
-export default function Eksplor({ auth, files }) {
+export default function Eksplor({ auth, files, kategori }) {
     const contentRef = useRef(null);
-    const icons = [
-        {
-            component: <IconCopy size={20} />,
-            route: '',
-            action: () => {
-                console.log('Edit clicked');
-            },
-            color: 'i-pink-300',
-        },
-    ];
 
     const handleCopyClick = (content) => {
         navigator.clipboard.writeText(content);
@@ -32,8 +22,19 @@ export default function Eksplor({ auth, files }) {
             <Navbar auth={auth} />
             <div className='px-10'>
 
-                <div>
+                <div className='flex items-center gap-4'>
                     <SearchLink />
+                    <select
+                        name="kategori"
+                        id="kategori"
+                        className='block mt-1 rounded-md border-i-pink-500 h-fit'
+                        onChange={(e) => setData('kategori', e.target.value)}
+                    >
+                        <option value="">Pilih Kategori</option>
+                        {kategori && kategori.map((k) => (
+                            <option key={k.id} value={k.id}>{k.kategori}</option>
+                        ))}
+                    </select>
                 </div>
                 <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
                     {files && files.map((file) => (
