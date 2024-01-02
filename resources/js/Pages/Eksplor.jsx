@@ -12,35 +12,36 @@ import React, { useRef, useState, useEffect } from 'react'
 export default function Eksplor({ auth, files, kategori }) {
     const contentRef = useRef(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [filteredFiles, setFilteredFiles] = useState(files);
+
+    useEffect(() => {
+        let filtered = files;
+
+        if (searchQuery.trim() !== '') {
+            filtered = filtered.filter((file) =>
+                ['nama_file', 'url', 'deskripsi'].some((field) =>
+                    String(file[field]).toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+        }
+
+        if (selectedCategory !== '') {
+            filtered = filtered.filter((file) => file.kategori.id === Number(selectedCategory));
+        }
+
+        setFilteredFiles(filtered);
+    }, [searchQuery, selectedCategory, files]);
 
     const handleCopyClick = (content) => {
         navigator.clipboard.writeText(content);
     };
-
-    const searchFilter = () => {
-        if (searchQuery.trim() === '') {
-            setFilteredFiles(files);
-        } else {
-            const filtered = files.filter((file) =>
-                ['nama_file', 'url', 'deskripsi'].some((field) =>
-                    file[field].toLowerCase().includes(searchQuery.toLowerCase())
-                )
-            );
-            setFilteredFiles(filtered);
-        }
-    };
-
-    useEffect(() => {
-        searchFilter();
-    }, [searchQuery, files]);
 
     return (
         <>
             <Head title="Eksplor" />
             <Navbar auth={auth} />
             <div className='px-10'>
-
                 <div className='flex items-center gap-4'>
                     <SearchLink
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -50,7 +51,7 @@ export default function Eksplor({ auth, files, kategori }) {
                         name="kategori"
                         id="kategori"
                         className='block w-[250px] mt-1 rounded-md border-i-pink-500 h-fit'
-                        onChange={(e) => setData('kategori', e.target.value)}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
                     >
                         <option value="">Pilih Kategori</option>
                         {kategori && kategori.map((k) => (
@@ -60,7 +61,7 @@ export default function Eksplor({ auth, files, kategori }) {
                 </div>
                 <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
                     {filteredFiles && filteredFiles.map((file) => (
-                        <div className='w-full overflow-hidden shadow-md shadow-i-pink-500/20 rounded-xl'>
+                        <div key={file.id} className='w-full overflow-hidden shadow-md shadow-i-pink-500/20 rounded-xl'>
                             <div className=' flex justify-between px-4 text-[12px] text-i-pink-500 relative top-4'>
                                 <p className='flex items-center gap-1'><IconUserCircle size={16} strokeWidth={1.2} ></IconUserCircle>
                                     {file.userRole === 'uploader' ? (file.uploader ? file.uploader.username : 'Unknown Uploader') : file.waster.username}

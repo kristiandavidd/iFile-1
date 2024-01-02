@@ -9,7 +9,26 @@ import Swal from 'sweetalert2';
 export default function Sampah({ auth, files, kategori }) {
     const contentRef = useRef(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [filteredFiles, setFilteredFiles] = useState(files);
+
+    useEffect(() => {
+        let filtered = files;
+
+        if (searchQuery.trim() !== '') {
+            filtered = filtered.filter((file) =>
+                ['nama_file', 'url', 'deskripsi'].some((field) =>
+                    String(file[field]).toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+        }
+
+        if (selectedCategory !== '') {
+            filtered = filtered.filter((file) => file.kategori.id === Number(selectedCategory));
+        }
+
+        setFilteredFiles(filtered);
+    }, [searchQuery, selectedCategory, files]);
 
     const handleRestoreClick = (id) => {
         Swal.fire({
@@ -32,22 +51,6 @@ export default function Sampah({ auth, files, kategori }) {
         });
     };
 
-    const searchFilter = () => {
-        if (searchQuery.trim() === '') {
-            setFilteredFiles(files);
-        } else {
-            const filtered = files.filter((file) =>
-                ['nama_file', 'url', 'deskripsi'].some((field) =>
-                    file[field].toLowerCase().includes(searchQuery.toLowerCase())
-                )
-            );
-            setFilteredFiles(filtered);
-        }
-    };
-
-    useEffect(() => {
-        searchFilter();
-    }, [searchQuery, files]);
 
     return (
         <>
@@ -63,7 +66,7 @@ export default function Sampah({ auth, files, kategori }) {
                         name="kategori"
                         id="kategori"
                         className='block mt-1 w-[250px] rounded-md border-i-pink-500 h-fit'
-                        onChange={(e) => setData('kategori', e.target.value)}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
                     >
                         <option value="">Pilih Kategori</option>
                         {kategori && kategori.map((k) => (
