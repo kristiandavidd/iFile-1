@@ -13,6 +13,7 @@ use App\Http\Controllers\EksplorController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MyFileController;
 use App\Http\Controllers\AdminSampahController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MySampahController;
 
@@ -40,9 +41,7 @@ Route::get('/', function () {
 Route::inertia('/', 'Home')->name('home');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Admin/Home');
-    })->name('admin');
+    Route::get('/', [HomeController::class, 'indexAdmin'])->name('admin');
     Route::get('/file', [FileController::class, 'index'])->name('file.index');
     Route::get('/sampah', [AdminSampahController::class, 'index'])->name('sampah.index');
     Route::get('/sampah/{id}', [AdminSampahController::class, 'destroy'])->name('delete-permanen');
@@ -61,15 +60,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 });
 
 Route::middleware(['auth','regular_user'])->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Home');
-    })->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/eksplor', [EksplorController::class, 'index'])->name('eksplor.index');
     Route::get('/file-saya', [MyFileController::class, 'index'])->name('file-saya.index');
     Route::get('/sampah', [MySampahController::class, 'index'])->name('sampah-saya.index');
 });
 
 Route::middleware(['auth'])->group(function() {
+    Route::get('/kategori/{kategori}', [KategoriController::class, 'show'])
+    ->name('kategori.show');
     Route::post('/tambah-file', [AddFileController::class, 'store'])->name('tambah-file.store');
     Route::get('/tambah-file', [AddFileController::class, 'index'])->name('tambah-file');
     Route::post('/edit-file/{id}', [EditFileController::class, 'update'])->name('edit-file.update');
@@ -77,6 +76,10 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/delete-file/{id}', [MyFileController::class, 'destroy'])->name('delete-file');
     Route::get('/restore-file/{id}', [MySampahController::class, 'restore'])->name('restore-file');
 });
+
+Route::get('/kategori/{any}', function () {
+    return redirect()->route('home');
+})->where('any', '.*');
 
 Route::get('/images/{filename}', function ($filename) {
     return response()->file(public_path("images/{$filename}"));

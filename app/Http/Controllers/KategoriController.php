@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Kategori;
+use App\Models\File;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 class KategoriController extends Controller
 {
@@ -59,4 +62,25 @@ class KategoriController extends Controller
 
         return redirect()->route('kategori.index');
     }
+
+    public function show(Request $request, $kategori)
+{
+    $k = Kategori::where('kategori', $kategori)->first();
+
+    if (!$k) {
+        return Redirect::route('home');
+    }
+
+    $files = File::where('kategori', $k->id)->with(['kategori', 'uploader'])->get();
+    $userRole = 'uploader';
+
+    $files->transform(function ($file) use($userRole) {
+        $file->formattedDate = Carbon::createFromFormat('Y-m-d', $file->tgl_upload)->format('d M Y');
+        $file->userRole = $userRole;
+        return $file;
+    });
+
+    return Inertia::render('ShowKategori', ['files' => $files]);
+}
+
 }

@@ -30,7 +30,7 @@ export function Navbar({ auth }) {
                                         <Link method='post' href={
                                             route('logout')
                                         }
-                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bg-i-pink-500" >
+                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 bg-i-pink-500" >
                                             Log Out
                                         </Link>
 
@@ -44,7 +44,7 @@ export function Navbar({ auth }) {
                                         <Link href={
                                             route('login')
                                         }
-                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bg-i-pink-500" >
+                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 bg-i-pink-500" >
                                             Log in
                                         </Link>
 
@@ -87,7 +87,7 @@ export function NavbarAdmin({ auth }) {
                                         <Link method='post' href={
                                             route('logout')
                                         }
-                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bg-i-pink-500" >
+                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 bg-i-pink-500" >
                                             Log Out
                                         </Link>
 
@@ -101,7 +101,7 @@ export function NavbarAdmin({ auth }) {
                                         <Link href={
                                             route('login')
                                         }
-                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 bg-i-pink-500" >
+                                            className="px-4 py-2 text-white text-gray-600 rounded-md hover:text-gray-900 bg-i-pink-500" >
                                             Log in
                                         </Link>
 

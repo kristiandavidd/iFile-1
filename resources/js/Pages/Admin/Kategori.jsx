@@ -74,10 +74,10 @@ export default function Kategori({ auth, kategori }) {
                                     <div className='bg-i-pink-100 w-[70px] h-[70px] rounded-full m-auto'>
                                     </div>
                                 </div>
-                                <div>
+                                <a href={route('kategori.show', k.kategori)}>
                                     <p className='mb-1 font-semibold text-md'>{k.kategori}</p>
                                     <p className='text-sm'>{k.keterangan}</p>
-                                </div>
+                                </a>
                             </div>
                             <div className='flex w-full gap-4'>
                                 <a href={route('edit-kategori', { id: k.id })} className='flex items-center justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'>
