@@ -6,11 +6,13 @@ import SearchLink from '@/Components/SearchLink';
 import { NavbarAdmin } from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard';
 import { IconCopy, IconTrash, IconPencil } from '@tabler/icons-react';
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 
 export default function User({ auth, users }) {
     const contentRef = useRef(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredUsers, setFilteredUser] = useState(users);
 
     const handleDeleteUser = (id) => {
         Swal.fire({
@@ -33,19 +35,40 @@ export default function User({ auth, users }) {
         });
     };
 
+    const searchFilter = () => {
+        if (searchQuery.trim() === '') {
+            setFilteredUser(users);
+        } else {
+            const filtered = Object.values(users).filter((user) => {
+                return ['username', 'role'].some((field) => {
+                    const fieldValue = user[field];
+                    return fieldValue && fieldValue.toLowerCase().includes(searchQuery.toLowerCase());
+                });
+            });
+            setFilteredUser(filtered);
+        }
+    };
+
+    useEffect(() => {
+        searchFilter();
+    }, [searchQuery, users]);
+
     return (
         <>
             <Head title="Pengguna" />
             <NavbarAdmin auth={auth} />
             <div className='px-10'>
                 <div className='flex items-center justify-between'>
-                    <SearchLink />
+                    <SearchLink
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchQuery}
+                    />
                     <Link href={route('tambah-user')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
                         +Tambah User
                     </Link>
                 </div>
                 <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {Object.entries(users).map(([userId, user]) => (
+                    {Object.entries(filteredUsers).map(([userId, user]) => (
                         <div className='flex p-4 rounded-md shadow-md shadow-i-pink-500/20'>
                             <div className='w-2/3'>
                                 <p className='font-semibold truncate'>{user.username}</p>

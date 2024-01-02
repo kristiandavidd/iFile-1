@@ -12,7 +12,7 @@ export default function SearchLink({ onChange, value }) {
     return (
         <input
             type="text"
-            placeholder="Cari file di sini..."
+            placeholder="Cari di sini..."
             value={value}
             onChange={onChange}
             className="block w-[250px] mt-1 rounded-md border-i-pink-500 h-fit"

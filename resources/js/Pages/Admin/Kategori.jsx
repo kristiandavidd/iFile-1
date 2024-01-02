@@ -6,21 +6,14 @@ import { NavbarAdmin } from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard';
 import { IconCopy, IconPencil, IconTrash } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 
 
 export default function Kategori({ auth, kategori }) {
     const contentRef = useRef(null);
-
-    const handleCopyClick = () => {
-        const range = document.createRange();
-        range.selectNode(contentRef.current);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        document.execCommand('copy');
-        window.getSelection().removeAllRanges();
-    };
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterdedKategori, setfilterdedKategori] = useState(kategori);
 
     const handleDeleteKategori = (id) => {
         Swal.fire({
@@ -42,20 +35,40 @@ export default function Kategori({ auth, kategori }) {
         });
     }
 
+    const searchFilter = () => {
+        if (searchQuery.trim() === '') {
+            setfilterdedKategori(kategori);
+        } else {
+            const filtered = kategori.filter((k) =>
+                ['kategori', 'keterangan'].some((field) =>
+                    k[field].toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+            setfilterdedKategori(filtered);
+        }
+    };
+
+    useEffect(() => {
+        searchFilter();
+    }, [searchQuery, kategori]);
+
     return (
         <>
             <Head title="Kategori" />
             <NavbarAdmin auth={auth} />
             <div className='px-10'>
                 <div className='flex items-center justify-between'>
-                    <SearchLink />
+                    <SearchLink
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchQuery}
+                    />
                     <Link href={route('tambah-kategori')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
                         +Tambah Kategori
                     </Link>
                 </div>
                 <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {kategori && kategori.map((k) => (
-                        <div className='w-full p-4 rounded-md shadow-md shadow-i-pink-500/20'>
+                    {filterdedKategori && filterdedKategori.map((k) => (
+                        <div className='flex flex-col justify-between w-full p-4 rounded-md shadow-md shadow-i-pink-500/20'>
                             <div className='flex items-center gap-4 mb-4'>
                                 <div>
                                     <div className='bg-i-pink-100 w-[70px] h-[70px] rounded-full m-auto'>
@@ -66,7 +79,7 @@ export default function Kategori({ auth, kategori }) {
                                     <p className='text-sm'>{k.keterangan}</p>
                                 </div>
                             </div>
-                            <div className='flex w-full gap-4 '>
+                            <div className='flex w-full gap-4'>
                                 <a href={route('edit-kategori', { id: k.id })} className='flex justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'>
                                     <IconPencil size={20} />
                                     Edit

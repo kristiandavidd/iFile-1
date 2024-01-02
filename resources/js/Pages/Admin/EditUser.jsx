@@ -4,6 +4,7 @@ import { NavbarAdmin } from "@/Components/navbar"
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
+import { IconPencil } from '@tabler/icons-react';
 
 export default function AddUser({ auth, user }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -85,9 +86,10 @@ export default function AddUser({ auth, user }) {
                             </select>
                         </div>
                         <div className="self-center mt-4">
-                            <button type="submit" className="py-2 text-white text-gray-600 rounded-md px-7 h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
+                            <button type="submit" className="flex items-center gap-2 py-2 text-white text-gray-600 rounded-md px-7 h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
                                 onClick={handleSubmit}>
-                                +Tambah User
+                                <IconPencil size={20} />
+                                Edit Pengguna
                             </button>
                         </div>
                     </form>
