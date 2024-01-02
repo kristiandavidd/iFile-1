@@ -109,16 +109,16 @@ export default function File({ auth, files, kategori }) {
                                     <a href={file.url} target='_blank' className="w-full px-4 py-2 text-center text-white text-gray-600 truncate rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500">
                                         {file.url}
                                     </a>
-                                    <button onClick={() => handleCopyClick(file.url)} className={`px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-pink-300 active:bg-i-pink-100`}>
+                                    <button onClick={() => handleCopyClick(file.url)} className={`px-2 py-2 flex items-center text-center text-white rounded-md hover:text-gray-900  bg-i-pink-300 active:bg-i-pink-100`}>
                                         <IconCopy />
                                     </button>
                                     <a
-                                        className={`px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-yellow-500`}
+                                        className={`px-2 py-2 flex items-center text-center text-white rounded-md hover:text-gray-900  bg-i-yellow-500`}
                                         href={route('edit-file', { id: file.id })}>
                                         <IconPencil size={20} />
                                     </a>
                                     <a
-                                        className={`cursor-pointer px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-orange-500`}
+                                        className={`cursor-pointer px-2 py-2 flex items-center text-center text-white rounded-md hover:text-gray-900  bg-i-orange-500`}
                                         onClick={() => handleDeleteClick(file.id)}
                                     >
                                         <IconTrash size={20} />

@@ -80,11 +80,11 @@ export default function Kategori({ auth, kategori }) {
                                 </div>
                             </div>
                             <div className='flex w-full gap-4'>
-                                <a href={route('edit-kategori', { id: k.id })} className='flex justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'>
+                                <a href={route('edit-kategori', { id: k.id })} className='flex items-center justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'>
                                     <IconPencil size={20} />
                                     Edit
                                 </a>
-                                <a onClick={() => handleDeleteKategori(k.id)} className='flex justify-center w-full gap-2 p-2 text-white rounded-md cursor-pointer bg-i-orange-500'>
+                                <a onClick={() => handleDeleteKategori(k.id)} className='flex items-center justify-center w-full gap-2 p-2 text-white rounded-md cursor-pointer bg-i-orange-500'>
                                     <IconTrash size={20} />
                                     Delete
                                 </a>

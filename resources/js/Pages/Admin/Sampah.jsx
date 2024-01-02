@@ -117,10 +117,10 @@ export default function Sampah({ auth, files, kategori }) {
                                     >
                                         {file.url}
                                     </a>
-                                    <a onClick={() => handleRestoreClick(file.id)} className={`cursor-pointer px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-yellow-500`}>
+                                    <a onClick={() => handleRestoreClick(file.id)} className={`cursor-pointer px-2 py-2 flex items-center text-center text-white rounded-md hover:text-gray-900  bg-i-yellow-500`}>
                                         <IconRotateClockwise size={20} />
                                     </a>
-                                    <a onClick={() => handleDeletePermanen(file.id)} className={`cursor-pointer px-2 py-2 text-center text-white rounded-md hover:text-gray-900  bg-i-orange-500`}>
+                                    <a onClick={() => handleDeletePermanen(file.id)} className={`cursor-pointer px-2 py-2 flex items-center text-center text-white rounded-md hover:text-gray-900  bg-i-orange-500`}>
                                         <IconTrash size={20} />
                                     </a>
                                 </div>

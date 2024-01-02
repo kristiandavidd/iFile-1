@@ -72,7 +72,7 @@ export default function EditKategori({ auth, kategori }) {
                             <InputError message={errors.keterangan} className="mt-2 text-[#ff0000]" />
                         </div>
                         <div className="self-center mt-4">
-                            <button type="submit" className="flex py-2 text-white text-gray-600 rounded-md px-7 h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
+                            <button type="submit" className="flex items-center gap-2 py-2 text-white text-gray-600 rounded-md px-7 h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
                                 onClick={handleSubmit}>
                                 <IconPencil size={20} />
                                 Edit Kategori
