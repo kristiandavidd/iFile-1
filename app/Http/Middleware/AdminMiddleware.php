@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminMiddleware
 {
@@ -21,6 +22,10 @@ class AdminMiddleware
 
 public function handle(Request $request, Closure $next)
 {
+    if ($request->getRequestUri() !== '/' && substr($request->getRequestUri(), -1) === '/') {
+        return Redirect::to(rtrim($request->getRequestUri(), '/'), 301);
+    }
+
     if (auth()->check()) {
         $role = auth()->user()->role;
         Log::info("User '{$request->user()->email}' has role '{$role}'.");
