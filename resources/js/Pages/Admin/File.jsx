@@ -6,12 +6,14 @@ import { NavbarAdmin } from '@/Components/navbar'
 import LinkCard from '@/Components/LinkCard';
 import { IconCopy, IconUserCircle, IconCalendarPlus, IconPencil, IconTrash } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 
 
 export default function File({ auth, files, kategori }) {
     const contentRef = useRef(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredFiles, setFilteredFiles] = useState(files);
 
     const handleDeleteClick = (id) => {
         Swal.fire({
@@ -37,6 +39,23 @@ export default function File({ auth, files, kategori }) {
         navigator.clipboard.writeText(content);
     };
 
+    const searchFilter = () => {
+        if (searchQuery.trim() === '') {
+            setFilteredFiles(files);
+        } else {
+            const filtered = files.filter((file) =>
+                ['nama_file', 'url', 'deskripsi'].some((field) =>
+                    file[field].toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+            setFilteredFiles(filtered);
+        }
+    };
+
+    useEffect(() => {
+        searchFilter();
+    }, [searchQuery, files]);
+
     return (
         <>
             <Head title="File Manajemen" />
@@ -44,11 +63,14 @@ export default function File({ auth, files, kategori }) {
             <div className='px-10'>
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center gap-4'>
-                        <SearchLink />
+                        <SearchLink
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={searchQuery}
+                        />
                         <select
                             name="kategori"
                             id="kategori"
-                            className='block mt-1 rounded-md border-i-pink-500 h-fit'
+                            className='block mt-1 rounded-md w-[250px] border-i-pink-500 h-fit'
                             onChange={(e) => setData('kategori', e.target.value)}
                         >
                             <option value="">Pilih Kategori</option>
@@ -63,11 +85,11 @@ export default function File({ auth, files, kategori }) {
                 </div>
 
                 <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {files && files.map((file) => (
+                    {filteredFiles && filteredFiles.map((file) => (
                         <div className='w-full overflow-hidden shadow-md shadow-i-pink-500/20 rounded-xl'>
                             <div className=' flex justify-between px-4 text-[12px] text-i-pink-500 relative top-4'>
                                 <p className='flex items-center gap-1'><IconUserCircle size={16} strokeWidth={1.2} ></IconUserCircle>
-                                    {file.userRole === 'uploader' ? (file.uploader ? file.uploader.name : 'Unknown Uploader') : file.waster.name}
+                                    {file.userRole === 'uploader' ? (file.uploader ? file.uploader.username : 'Unknown Uploader') : file.waster.username}
                                 </p>
                                 <p className='flex items-center gap-1'><IconCalendarPlus size={16} strokeWidth={1.2} ></IconCalendarPlus> {file.formattedDate}</p>
                             </div>
