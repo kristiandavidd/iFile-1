@@ -20,7 +20,8 @@ class KategoriController extends Controller
 
     public function showFormAdd()
     {
-        return Inertia::render('Admin/AddKategori');
+        $kategori = Kategori::all();
+        return Inertia::render('Admin/AddKategori', ['kategori'=>$kategori]);
     }
 
     public function store(Request $request) 
@@ -37,9 +38,10 @@ class KategoriController extends Controller
 
     public function showFormEdit(Request $request)
     {
+        $allKategori = Kategori::all(); 
         $kategori = Kategori::findOrFail($request->id);
 
-        return Inertia::render('Admin/EditKategori', ['kategori'=>$kategori]);
+        return Inertia::render('Admin/EditKategori', ['kategori'=>$kategori, 'allKategori'=>$allKategori]);
     }
 
     public function update(Request $request, $id)

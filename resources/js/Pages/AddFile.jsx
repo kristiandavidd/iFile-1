@@ -43,7 +43,7 @@ export default function Addfile({ auth, kategori }) {
         <Head title="Tambah File"></Head>
         <div className='flex w-full'>
             {auth && auth.user && auth.user.role === 'admin' ? (
-                <NavbarAdmin auth={auth} />
+                <NavbarAdmin auth={auth} kategori={kategori} />
             ) : (
                 <Navbar auth={auth} kategori={kategori} />
             )}
@@ -158,9 +158,10 @@ export default function Addfile({ auth, kategori }) {
                             </div>
                         )}
                         <div className="self-center mt-4">
-                            <button type="submit" className="py-2 text-white text-gray-600 rounded-md px-7 h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
+                            <button type="submit" className="flex items-center gap-2 py-2 text-white text-gray-600 rounded-md px-7 h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
                                 onClick={handleSubmit}>
-                                +Tambah File
+                                <IconUpload size={16} />
+                                Unggah File
                             </button>
                         </div>
                     </form>

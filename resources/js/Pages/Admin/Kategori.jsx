@@ -52,49 +52,57 @@ export default function Kategori({ auth, kategori }) {
         searchFilter();
     }, [searchQuery, kategori]);
 
+    const truncateString = (url, maxLength = 64) => {
+        if (url.length > maxLength) {
+            return `${url.slice(0, maxLength)}...`;
+        }
+        return url;
+    };
+
     return (
         <>
             <Head title="Kategori" />
-            <NavbarAdmin auth={auth} />
-            <div className='px-10'>
-                <div className='flex items-center justify-between'>
-                    <SearchLink
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        value={searchQuery}
-                    />
-                    <Link href={route('tambah-kategori')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
-                        +Tambah Kategori
-                    </Link>
+            <div className='flex w-full'>
+                <NavbarAdmin auth={auth} kategori={kategori} />
+                <div className='w-4/5 p-10'>
+                    <div className='flex items-center justify-between'>
+                        <SearchLink
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={searchQuery}
+                        />
+                        <Link href={route('tambah-kategori')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
+                            +Tambah Kategori
+                        </Link>
+                    </div>
+                    <table className='w-full my-3 text-sm rounded-md table-auto text-wrap border-spacing-y-2'>
+                        <thead className=''>
+                            <tr className='border-b-[1.5px] border-i-pink-500 bg-i-pink-100'>
+                                <th className='py-3 font-semibold'>Kategori</th>
+                                <th className='font-semibold'>Keterangan</th>
+                                <th className='font-semibold'>Action</th>
+                            </tr>
+                        </thead>
+                        {filterdedKategori && filterdedKategori.map((k) => (
+                            <tbody>
+                                <tr>
+                                    <td className='px-4 py-4 border-b-[1.5px] border-i-pink-500 font-semibold'>{k.kategori}</td>
+                                    <td className='border-b-[1.5px] border-i-pink-500'>{truncateString(k.keterangan)}</td>
+                                    <td className='border-b-[1.5px] border-i-pink-500'>
+                                        <div className='flex w-full gap-4 px-4 '>
+                                            <a href={route('edit-kategori', { id: k.id })} className='flex items-center justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'>
+                                                <IconPencil size={16} />
+                                            </a>
+                                            <a onClick={() => handleDeleteKategori(k.id)} className='flex items-center justify-center w-full gap-2 p-2 text-white rounded-md cursor-pointer bg-i-orange-500'>
+                                                <IconTrash size={16} />
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        ))}
+                    </table>
                 </div>
-                <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {filterdedKategori && filterdedKategori.map((k) => (
-                        <div className='flex flex-col justify-between w-full p-4 rounded-md shadow-md shadow-i-pink-500/20'>
-                            <div className='flex items-center gap-4 mb-4'>
-                                <div>
-                                    <div className='bg-i-pink-100 w-[70px] h-[70px] rounded-full m-auto'>
-                                    </div>
-                                </div>
-                                <a href={route('kategori.show', k.kategori)}>
-                                    <p className='mb-1 font-semibold text-md'>{k.kategori}</p>
-                                    <p className='text-sm'>{k.keterangan}</p>
-                                </a>
-                            </div>
-                            <div className='flex w-full gap-4'>
-                                <a href={route('edit-kategori', { id: k.id })} className='flex items-center justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'>
-                                    <IconPencil size={20} />
-                                    Edit
-                                </a>
-                                <a onClick={() => handleDeleteKategori(k.id)} className='flex items-center justify-center w-full gap-2 p-2 text-white rounded-md cursor-pointer bg-i-orange-500'>
-                                    <IconTrash size={20} />
-                                    Delete
-                                </a>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
             </div>
-
         </>
     )
 }

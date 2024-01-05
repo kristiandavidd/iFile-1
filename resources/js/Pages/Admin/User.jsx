@@ -9,7 +9,7 @@ import { IconCopy, IconTrash, IconPencil } from '@tabler/icons-react';
 import React, { useRef, useState, useEffect } from 'react'
 import Swal from 'sweetalert2';
 
-export default function User({ auth, users }) {
+export default function User({ auth, users, kategori }) {
     const contentRef = useRef(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredUsers, setFilteredUser] = useState(users);
@@ -56,39 +56,49 @@ export default function User({ auth, users }) {
     return (
         <>
             <Head title="Pengguna" />
-            <NavbarAdmin auth={auth} />
-            <div className='px-10'>
-                <div className='flex items-center justify-between'>
-                    <SearchLink
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        value={searchQuery}
-                    />
-                    <Link href={route('tambah-user')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
-                        +Tambah User
-                    </Link>
-                </div>
-                <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {Object.entries(filteredUsers).map(([userId, user]) => (
-                        <div className='flex p-4 rounded-md shadow-md shadow-i-pink-500/20'>
-                            <div className='w-2/3'>
-                                <p className='font-semibold truncate'>{user.username}</p>
-                                <p>{user.role}</p>
-                            </div>
-                            <div className='flex items-center w-1/3 gap-4'>
-                                <a className='flex justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'
-                                    href={route('edit-user', { id: user.id })} >
-                                    <IconPencil size={20} />
-                                </a>
-                                <a className='flex justify-center w-full gap-2 p-2 text-white rounded-md cursor-pointer bg-i-orange-500'
-                                    onClick={() => handleDeleteUser(user.id)}>
-                                    <IconTrash size={20} />
-                                </a>
-                            </div>
-                        </div>
-                    ))}
+            <div className='flex w-full'>
+                <NavbarAdmin auth={auth} kategori={kategori} />
+                <div className='w-4/5 p-10'>
+                    <div className='flex items-center justify-between'>
+                        <SearchLink
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={searchQuery}
+                        />
+                        <Link href={route('tambah-user')} className='px-4 py-2 text-white text-gray-600 rounded-md h-fit hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500'>
+                            +Tambah User
+                        </Link>
+                    </div>
+                    <table className='w-full my-3 text-sm rounded-md table-auto text-wrap border-spacing-y-2'>
+                        <thead className=''>
+                            <tr className='border-b-[1.5px] border-i-pink-500 bg-i-pink-100'>
+                                <th className='py-3 font-semibold'>Username</th>
+                                <th className='font-semibold'>Peran</th>
+                                <th className='font-semibold'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.entries(filteredUsers).map(([userId, user]) => (
+                                <tr >
+                                    <td className='px-4 border-b-[1.5px] border-i-pink-500 font-semibold'>{user.username}</td>
+                                    <td className='text-center border-b-[1.5px] border-i-pink-500'>{user.role}</td>
+                                    <td className='flex justify-center border-b-[1.5px] border-i-pink-500 py-2'>
+                                        <div className='flex items-center justify-center w-1/3 gap-4'>
+                                            <a className='flex justify-center w-full gap-2 p-2 text-white rounded-md bg-i-yellow-500'
+                                                href={route('edit-user', { id: user.id })} >
+                                                <IconPencil size={20} />
+                                            </a>
+                                            <a className='flex justify-center w-full gap-2 p-2 text-white rounded-md cursor-pointer bg-i-orange-500'
+                                                onClick={() => handleDeleteUser(user.id)}>
+                                                <IconTrash size={20} />
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
         </>
     )
 }

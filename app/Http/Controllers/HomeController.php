@@ -17,7 +17,7 @@ class HomeController extends Controller
 
     public function indexAdmin()
     {
-        $kategori = Kategori::take(3)->get();
+        $kategori = Kategori::all();
 
         return Inertia::render('Admin/Home', ['kategori'=>$kategori]);
     }

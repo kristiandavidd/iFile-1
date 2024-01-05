@@ -8,24 +8,27 @@ use Inertia\Inertia;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Kategori;
 
 class UserController extends Controller
 {
     public function index()
     {
+        $kategori = Kategori::all();
         $users = User::all();
 
         $filteredUsers = $users->reject(function ($user) {
             return $user->username === 'admin' || $user->id === Auth::id();
         });
 
-        return Inertia::render('Admin/User', ['users' => $filteredUsers]);
+        return Inertia::render('Admin/User', ['users' => $filteredUsers, 'kategori'=> $kategori]);
 
     }
 
     public function showFormAdd()
     {
-        return Inertia::render('Admin/AddUser');
+        $kategori = Kategori::all();
+        return Inertia::render('Admin/AddUser', ['kategori' => $kategori]);
     }
 
     public function store(Request $request) 
@@ -44,8 +47,9 @@ class UserController extends Controller
     public function showFormEdit(Request $request)
     {
         $user = User::find($request->id);
+        $kategori = Kategori::all();
 
-        return Inertia::render('Admin/EditUser', ['user' => $user]);
+        return Inertia::render('Admin/EditUser', ['user' => $user, 'kategori' => $kategori]);
     }
 
     public function update(Request $request, $id)

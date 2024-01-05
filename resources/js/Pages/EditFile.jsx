@@ -42,7 +42,7 @@ export default function EditFile({ auth, file, kategori }) {
         <Head title="Edit File"></Head>
         <div className='flex w-full'>
             {auth && auth.user && auth.user.role === 'admin' ? (
-                <NavbarAdmin auth={auth} />
+                <NavbarAdmin auth={auth} kategori={kategori} />
             ) : (
                 <Navbar auth={auth} kategori={kategori} />
             )}
