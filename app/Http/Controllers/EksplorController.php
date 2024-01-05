@@ -8,6 +8,7 @@ use App\Models\Kategori;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use App\Models\Sampah;
 
 class EksplorController extends Controller
 {
@@ -24,5 +25,28 @@ class EksplorController extends Controller
         });
 
         return Inertia::render('Eksplor', ['files' => $files, 'kategori'=>$kategori]);
+    }
+
+    public function destroy(Request $request,$id)
+    {
+        $file = File::find($id);
+
+        Sampah::create([
+            'nama_file' => $file->nama_file,
+            'deskripsi' => $file->deskripsi,
+            'url' => $file->url,
+            'kategori' => $file->kategori,
+            'jenis_file' => $file->jenis_file,
+            'tgl_buang' => now(),
+            'waster' => auth()->user()->id,
+        ]);
+
+        $file->delete();
+
+        if ($request->user()->isAdmin()) {
+            return redirect()->route('file.index')->with('success', 'File berhasil diperbarui.');
+        } else {
+            return redirect()->route('eksplor.index')->with('success', 'File berhasil diperbarui.');
+        }
     }
 }

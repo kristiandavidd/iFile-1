@@ -66,6 +66,7 @@ class KategoriController extends Controller
     public function show(Request $request, $kategori)
 {
     $k = Kategori::where('kategori', $kategori)->first();
+    $kategori = Kategori::all();
 
     if (!$k) {
         return Redirect::route('home');
@@ -80,7 +81,7 @@ class KategoriController extends Controller
         return $file;
     });
 
-    return Inertia::render('ShowKategori', ['files' => $files]);
+    return Inertia::render('ShowKategori', ['files' => $files, 'kategori'=>$kategori]);
 }
 
 }

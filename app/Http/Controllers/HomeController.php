@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $kategori = Kategori::take(3)->get();
+        $kategori = Kategori::all();
 
         return Inertia::render('Home', ['kategori'=>$kategori]);
     }

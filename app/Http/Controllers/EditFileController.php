@@ -57,13 +57,13 @@ class EditFileController extends Controller
             'url' => $fileUrl,
             'kategori' => $request->input('kategori'),
             'tgl_upload' => now(),
-
+            'uploader' => auth()->user()->id,
         ]);
 
         if ($request->user()->isAdmin()) {
             return redirect()->route('file.index')->with('success', 'File berhasil diperbarui.');
         } else {
-            return redirect()->route('file-saya.index')->with('success', 'File berhasil diperbarui.');
+            return redirect()->route('eksplor.index')->with('success', 'File berhasil diperbarui.');
         }
         
     }

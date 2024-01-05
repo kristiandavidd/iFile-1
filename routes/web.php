@@ -62,7 +62,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth','regular_user'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/eksplor', [EksplorController::class, 'index'])->name('eksplor.index');
-    Route::get('/file-saya', [MyFileController::class, 'index'])->name('file-saya.index');
     Route::get('/sampah', [MySampahController::class, 'index'])->name('sampah-saya.index');
 });
 
@@ -73,7 +72,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/tambah-file', [AddFileController::class, 'index'])->name('tambah-file');
     Route::post('/edit-file/{id}', [EditFileController::class, 'update'])->name('edit-file.update');
     Route::match(['get', 'post'],'/edit-file', [EditFileController::class, 'index'])->name('edit-file');
-    Route::get('/delete-file/{id}', [MyFileController::class, 'destroy'])->name('delete-file');
+    Route::get('/delete-file/{id}', [EksplorController::class, 'destroy'])->name('delete-file');
     Route::get('/restore-file/{id}', [MySampahController::class, 'restore'])->name('restore-file');
 });
 
