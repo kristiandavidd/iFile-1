@@ -74,6 +74,8 @@ Route::middleware(['auth'])->group(function() {
     Route::match(['get', 'post'],'/edit-file', [EditFileController::class, 'index'])->name('edit-file');
     Route::get('/delete-file/{id}', [EksplorController::class, 'destroy'])->name('delete-file');
     Route::get('/restore-file/{id}', [MySampahController::class, 'restore'])->name('restore-file');
+    route::get('/detail-angkatan/{angkatan}', [HomeController::class, 'show'])->name('detail-angkatan');
+    route::post('/update-status/{nim}', [HomeController::class, 'updateStatus'])->name('update-status');    
 });
 
 Route::get('/kategori/{any}', function () {

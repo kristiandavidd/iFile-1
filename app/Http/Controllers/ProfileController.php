@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Kategori;
 
 class ProfileController extends Controller
 {
@@ -19,7 +20,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $kategori = Kategori::all();
         return Inertia::render('Profile/Edit', [
+            'kategori'=>$kategori,
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);

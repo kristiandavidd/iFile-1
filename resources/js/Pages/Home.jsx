@@ -50,6 +50,14 @@ export default function Home({ auth, kategori, mahasiswaData }) {
                     }],
                 },
                 options: {
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10,
+                        },
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -98,10 +106,12 @@ export default function Home({ auth, kategori, mahasiswaData }) {
                     </div>
                     <div className='grid grid-cols-2 w-full gap-4'>
                         {chartRefs.current.map(({ angkatan, chartRef }, index) => (
-                            <div key={index} className="my-4">
-                                <canvas ref={(ref) => ref && ref.replaceWith(chartRef)} />
-                                <p className="text-center">Angkatan {angkatan}</p>
+                            <div key={index} className="my-4 flex flex-col">
+                                <p className="text-center font-semibold mb-2">Angkatan {angkatan}</p>
+                                <canvas ref={(ref) => ref && ref.replaceWith(chartRef)} className='w-fit h-fit' />
+                                <a href={route('detail-angkatan', { angkatan: angkatan })} className='py-2 px-5 m-auto bg-i-pink-500 rounded-md text-white'>Detail Mahasiswa {angkatan}</a>
                             </div>
+
                         ))}
                     </div>
                 </div>

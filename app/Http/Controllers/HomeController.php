@@ -24,4 +24,21 @@ class HomeController extends Controller
         return Inertia::render('Admin/Home', ['kategori'=>$kategori]);
     }
 
+    public function show($angkatan) {
+        $mahasiswa = Mahasiswa::where('angkatan', $angkatan)->get();
+        $kategori = Kategori::all();
+        return Inertia::render('ShowDetail', ['kategori'=>$kategori,'mahasiswa'=>$mahasiswa, 'angkatan'=>$angkatan]);
+    }
+
+    public function updateStatus(Request $request, $nim) {
+    
+    $mahasiswa = Mahasiswa::find($nim);
+    $status = $request->input('status');
+
+
+    $mahasiswa->status = $status;
+    $mahasiswa->save();
+
+    return redirect()->back();
+}
 }

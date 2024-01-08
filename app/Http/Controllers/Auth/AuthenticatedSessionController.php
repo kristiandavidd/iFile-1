@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->isAdmin()) {
             return redirect()->route('admin');
         } else {
-            return redirect()->intended(RouteServiceProvider::HOME)->with('mahasiswaData', $mahasiswaData);
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
     }
 
