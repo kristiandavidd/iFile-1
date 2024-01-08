@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Mahasiswa;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,19 +30,20 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
 
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
 {
     $credentials = $request->only('username', 'password');
 
     if (Auth::attempt($credentials)) {
         $user = Auth::user();
+        $mahasiswaData = Mahasiswa::all();
 
         $request->session()->regenerate();
 
         if ($user->isAdmin()) {
             return redirect()->route('admin');
         } else {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::HOME)->with('mahasiswaData', $mahasiswaData);
         }
     }
 

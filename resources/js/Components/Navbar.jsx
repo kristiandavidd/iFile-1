@@ -25,7 +25,7 @@ export function Navbar({ auth, kategori }) {
                             </li>
                             <li className={`${url === '/' ? 'text-i-pink-500 gap-2 bg-white rounded-md w-full' : 'hover:text-i-pink-500  w-full gap-2'} flex items-center px-4 py-2`}>
                                 <IconHome size={20} strokeWidth={1.5} />
-                                <Link href={'/'} className='w-full h-full'>Beranda</Link>
+                                <a href={'/'} className='w-full h-full'>Beranda</a>
                             </li>
                             <li className={`${url === '/eksplor' ? 'text-i-pink-500 gap-2 bg-white rounded-md w-full' : 'hover:text-i-pink-500  w-full gap-2'} flex items-center px-4 py-2`}>
                                 <IconSearch size={20} strokeWidth={1.5} />
