@@ -1,10 +1,77 @@
-import {
-    Head,
-} from '@inertiajs/react';
-import { Navbar } from '@/Components/navbar'
+import { Head } from '@inertiajs/react';
+import { Navbar } from '@/Components/navbar';
+import { useEffect, useState, useRef } from 'react';
+import Chart from 'chart.js/auto';
 
+export default function Home({ auth, kategori, mahasiswaData }) {
+    const chartRef2021 = useRef(null);
+    const chartRef2022 = useRef(null);
+    const chartRef2023 = useRef(null);
 
-export default function Home({ auth, kategori }) {
+    useEffect(() => {
+        const generateChartData = (angkatan) => {
+            const filteredData = mahasiswaData.filter(mahasiswa => mahasiswa.angkatan === angkatan);
+            const statusCounts = {
+                Aktif: 0,
+                Lulus: 0,
+                'Tidak Aktif': 0,
+                Cuti: 0,
+            };
+
+            filteredData.forEach(mahasiswa => {
+                statusCounts[mahasiswa.status]++;
+            });
+
+            return Object.values(statusCounts);
+        };
+
+        const createChart = (chartRef, angkatan) => {
+            const ctx = chartRef.current.getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Aktif', 'Lulus', 'Tidak Aktif', 'Cuti'],
+                    datasets: [{
+                        label: `Angkatan ${angkatan}`,
+                        data: generateChartData(angkatan),
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 205, 86, 1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                        borderWidth: 1,
+                    }],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            });
+        };
+
+        if (chartRef2021.current) {
+            createChart(chartRef2021, 2021);
+        }
+
+        if (chartRef2022.current) {
+            createChart(chartRef2022, 2022);
+        }
+
+        if (chartRef2023.current) {
+            createChart(chartRef2023, 2023);
+        }
+    }, [mahasiswaData]);
+
     return (
         <>
             <Head title="Home" />
@@ -12,35 +79,27 @@ export default function Home({ auth, kategori }) {
                 <Navbar auth={auth} kategori={kategori} />
                 <div className='w-4/5 p-10'>
                     <div className='w-3/5 m-auto'>
-                        <p class=" text-4xl font-semibold text-center">Selamat Datang di iFile</p>
-                        <p className='my-2 text-center'>Sistem Informasi ini akan membantu anda terkait pengelolaan file di lingkungan Departemen Informatika Universitas Diponegoro.</p>
+                        <p className="text-4xl font-semibold text-center">Selamat Datang di iFile</p>
+                        <p className='my-2 text-center'>
+                            Sistem Informasi ini akan membantu anda terkait pengelolaan file di lingkungan Departemen
+                            Informatika Universitas Diponegoro.
+                        </p>
                     </div>
-                    <div className='w-4/5 m-auto'>
-                        <p className='mt-5 text-lg font-semibold text-center'>Jelajahi iFile</p>
+                    <div className='grid grid-cols-2 w-full'>
 
-                        <div className='grid grid-flow-row grid-cols-1 gap-4 py-4 sm:grid-cols-2 lg:grid-cols-3'>
-                            {kategori && kategori.map((k) => (
-                                <div className='flex justify-between w-full p-4 rounded-md shadow-md shadow-i-pink-500/20'>
-                                    <div className='flex flex-col items-center gap-4 mb-4 text-center'>
-                                        <div>
-                                            <div className='bg-i-pink-100 w-[70px] h-[70px] rounded-full m-auto'>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p className='mb-1 font-semibold text-md'>{k.kategori}</p>
-                                            <p className='text-sm'>{k.keterangan}</p>
-                                        </div>
-                                        <a href={route('kategori.show', k.kategori)} className="w-full px-4 py-2 text-center text-white text-gray-600 truncate rounded-md hover:text-gray-900 focus:bg-i-pink-500/60 bg-i-pink-500"
-                                        >
-                                            Lihat Kategori
-                                        </a>
-                                    </div>
-                                </div>
-                            ))}
+                        <div className="my-4">
+                            <canvas ref={chartRef2021} width="400" height="200"></canvas>
+                        </div>
+                        <div className="my-4">
+                            <canvas ref={chartRef2022} width="400" height="200"></canvas>
+                        </div>
+                        <div className="my-4">
+                            <canvas ref={chartRef2023} width="400" height="200"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
+
         </>
-    )
+    );
 }
